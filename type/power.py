@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    power.py                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
+#    Updated: 2024/04/26 20:16:09 by auguste          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 from utils.print_utils import   print_error
 from type.token import          Token
 from type.parentheses import    Parentheses
@@ -82,4 +94,9 @@ class Power:
             tokens.pop(i)
             tokens.pop(i)
 
-            tokens[i - 1] = Power(before, after)
+            power = Power(before, after)
+
+            if divide != None:
+                pass #TODO: add the division
+
+            tokens[i - 1] = power
