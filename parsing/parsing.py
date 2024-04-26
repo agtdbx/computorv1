@@ -13,7 +13,7 @@
 from utils.print_utils import print_error
 from parsing.ft_token import Token
 
-def get_tokens_from_input(string: str) -> list[Token]:
+def get_tokens_from_input(string: str) -> list:
     tokens = []
 
     length = len(string)
