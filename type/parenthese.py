@@ -22,8 +22,14 @@ class Parentheses:
 
     # String methods ###########################################################
 
-    def to_string(self) -> str:
-        return self.__str__()
+    def to_string(self, depth=0) -> str:
+        string = ' ' * depth + "parentheses :\n"
+        depth += 2
+
+        for i in range(len(self.tokens)):
+            string += self.tokens[i].to_string(depth) + '\n'
+
+        return string
 
     # Static methods ###########################################################
 

@@ -47,19 +47,19 @@ class Token:
 
     # String methods ###########################################################
 
-    def to_string(self) -> str:
+    def to_string(self, depth=0) -> str:
         if self.type == TOKEN_NONE:
-            return "none"
+            return ' ' * depth + "none"
         elif self.type == TOKEN_NUMBER:
-            return f"{self.value}"
+            return ' ' * depth + str(self.value)
         elif self.type == TOKEN_VARIABLE:
-            return f"{self.value}"
+            return ' ' * depth + str(self.value)
         elif self.type == TOKEN_OPERATOR:
-            return f"{self.value}"
+            return ' ' * depth + str(self.value)
         elif self.type == TOKEN_PARENTHESE:
-            return f"{self.value}"
+            return ' ' * depth + str(self.value)
         elif self.type == TOKEN_EQUAL:
-            return "="
+            return ' ' * depth + "="
         return "unknow"
 
     # Is methods ###############################################################
