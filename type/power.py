@@ -54,8 +54,16 @@ class Power:
 
             before = tokens[i - 1]
 
-            if type(before) == Token and before.is_operator():
-                print_error("value before the power can't be an operator")
+            if type(before) == Token:
+                if before.is_operator():
+                    print_error("value before the power can't be an operator")
+                elif before.is_number():
+                    if before.value == 1.0:
+                        tokens.pop(i)
+                        tokens.pop(i)
+                        tokens[i - 1] = Token.parse_number('1')
+                        i += 1
+                        continue
 
             if i + 1 == len(tokens):
                 print_error("need a value after the power")
@@ -70,22 +78,24 @@ class Power:
                 elif after.is_number():
                     number = after.value
 
-                    if number == 0:
+                    if number == 0.0:
                         tokens.pop(i)
                         tokens.pop(i)
                         tokens[i - 1] = Token.parse_number('1')
+                        i += 1
                         continue
 
-                    if number == 1:
+                    if number == 1.0:
                         tokens.pop(i)
                         tokens.pop(i)
+                        i += 1
                         continue
 
-                    elif number < 0:
+                    elif number < 0.0:
                         number = -number
                         divide = number
 
-                    if number - int(number) != 0:
+                    if number != int(number):
                         print_error("number after the power can't be decimal")
 
             elif type(after) == Parentheses:
@@ -93,6 +103,11 @@ class Power:
 
             tokens.pop(i)
             tokens.pop(i)
+
+            if type(before) == Token and before.is_number() and before.value == 0.0:
+                tokens[i - 1] = Token.parse_number('0')
+                i += 1
+                continue
 
             power = Power(before, after)
 

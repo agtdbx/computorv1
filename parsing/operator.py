@@ -13,6 +13,7 @@
 from type.x import              X
 from type.parentheses import    Parentheses
 from type.power import          Power
+from type.mult_div import       parse_mult_div
 
 def operator_check(left_tokens: list, right_tokens: list):
 
@@ -43,6 +44,18 @@ def operator_check(left_tokens: list, right_tokens: list):
     #print("\n#################[CHECK POWER]#################")
     Power.parse_power(left_tokens)
     Power.parse_power(right_tokens)
+
+    #print("\n====LEFT TOKENS====")
+    #for token in left_tokens:
+    #    print(token.to_string())
+
+    #print("\n====RIGHT TOKENS====")
+    #for token in right_tokens:
+    #    print(token.to_string())
+
+    #print("\n#################[CHECK MUTL-DIV]#################")
+    parse_mult_div(left_tokens)
+    parse_mult_div(right_tokens)
 
     print("\n====LEFT TOKENS====")
     for token in left_tokens:
