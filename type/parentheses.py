@@ -20,6 +20,14 @@ class Parentheses:
 
         return string
 
+    def contains_variable(self) -> bool:
+        for token in self.tokens:
+            if type(token) == Token and token.is_variable():
+                return True
+            if type(token) == Parentheses and token.contains_variable():
+                return True
+        return False
+
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:

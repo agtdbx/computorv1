@@ -1,4 +1,4 @@
-from type.parenthese import Parentheses
+from type.parentheses import    Parentheses
 
 def operator_check(left_tokens: list, right_tokens: list):
 
