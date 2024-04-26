@@ -27,6 +27,11 @@ class Power:
         i = 0
 
         while i < len(tokens):
+            if type(tokens[i]) == Parentheses:
+                Power.parse_power(tokens[i].tokens)
+                i += 1
+                continue
+
             if not type(tokens[i]) == Token or not tokens[i].is_operator()\
                     or tokens[i].value != '^':
                 i += 1
@@ -43,6 +48,7 @@ class Power:
             if i + 1 == len(tokens):
                 print_error("need a value after the power")
 
+            divide = None
             after = tokens[i + 1]
             if type(after) == Token:
                 if after.is_operator():
@@ -52,24 +58,28 @@ class Power:
                 elif after.is_number():
                     number = after.value
 
-                    if number > 0 and number - int(number):
+                    if number == 0:
+                        tokens.pop(i)
+                        tokens.pop(i)
+                        tokens[i - 1] = Token.parse_number('1')
+                        continue
+
+                    if number == 1:
+                        tokens.pop(i)
+                        tokens.pop(i)
+                        continue
+
+                    elif number < 0:
+                        number = -number
+                        divide = number
+
+                    if number - int(number) != 0:
                         print_error("number after the power can't be decimal")
-                    elif number < 0 and number + int(number):
-                        print_error("number after the power can't be decimal")
 
-            # elif type(after) == Parentheses and after.contains_variable():
-            #     print_error("value after the power can't contains a variable")
+            elif type(after) == Parentheses:
+                Power.parse_power(after.tokens)
 
-            # end = i
+            tokens.pop(i)
+            tokens.pop(i)
 
-            # if start + 1 == end:
-            #     print_error("empty parentheses")
-
-            # parentheses = Parentheses(tokens[start:end - 1])
-
-            # for _ in range(start, end):
-            #     tokens.pop(start)
-
-            # tokens[start - 1] = parentheses
-
-            # i = start
+            tokens[i - 1] = Power(before, after)

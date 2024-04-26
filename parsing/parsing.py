@@ -21,6 +21,7 @@ def get_tokens_from_input(string: str) -> list:
         print_error("empty parameter")
 
     number_before = False
+    operator_before = False
 
     start = 0
     while start < length:
@@ -31,25 +32,32 @@ def get_tokens_from_input(string: str) -> list:
         end = 0
         token = None
 
-        if is_begin_number(string[start]):
+        if is_begin_number(string[start])\
+                or (operator_before and start + 1 < length\
+                    and string[start] == '-'\
+                    and is_begin_number(string[start + 1])):
             end = get_end_number(string, length, start)
             token = Token.parse_number(string[start:end])
             number_before = True
+            operator_before = False
 
         elif is_operator(string[start]):
             end = start + 1
             token = Token.parse_operator(string[start:end])
             number_before = False
+            operator_before = True
 
         elif is_parentheses(string[start]):
             end = start + 1
             token = Token.parse_parenthese(string[start:end])
             number_before = False
+            operator_before = False
 
         elif string[start] == '=':
             end = start + 1
             token = Token.parse_equal(string[start:end])
             number_before = False
+            operator_before = False
 
         else:
             if number_before:
@@ -57,6 +65,7 @@ def get_tokens_from_input(string: str) -> list:
             end = get_end_variable(string, length, start)
             token = Token.parse_variable(string[start:end])
             number_before = False
+            operator_before = False
 
         tokens.append(token)
         start = end
@@ -81,6 +90,10 @@ def is_parentheses(char: str) -> bool:
 def is_begin_number(char: str) -> bool:
     return char in "0123456789"
 
+
+def is_begin_number_negative(char: str) -> bool:
+    return char in "0123456789-"
+
 # get end functions ------------------------------------------------------------
 
 def get_end_white_spaces(string: str, length: int, i: int) -> int:
@@ -92,6 +105,8 @@ def get_end_white_spaces(string: str, length: int, i: int) -> int:
 
 
 def get_end_number(string: str, length: int, i: int) -> int:
+    if string[i] == '-':
+        i += 1
     while i < length:
         if string[i] not in "0123456789.":
             break
