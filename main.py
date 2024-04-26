@@ -22,6 +22,8 @@ if __file__ != "__main__":
         print("Usage : python3 main.y <mathematical equation>")
         exit(1)
 
+    print(f"Input : {sys.argv[1]}")
+
     print("\n#################[PARSE INPUT]#################")
     tokens = get_tokens_from_input(sys.argv[1])
 

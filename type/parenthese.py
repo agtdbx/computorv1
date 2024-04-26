@@ -5,7 +5,7 @@ class Parentheses:
 
     def __init__(self, sub_tokens: list) -> None:
         self.tokens = sub_tokens
-        # Parentheses.parse_parentheses(sub_tokens)
+        Parentheses.parse_parentheses(sub_tokens)
 
 
     def __str__(self) -> str:
