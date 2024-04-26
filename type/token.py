@@ -30,15 +30,15 @@ class Token:
         if self.type == TOKEN_NONE:
             return "none"
         elif self.type == TOKEN_NUMBER:
-            return f"{self.value}\t: number"
+            return str(self.value)
         elif self.type == TOKEN_VARIABLE:
-            return f"{self.value}\t: variable"
+            return str(self.value)
         elif self.type == TOKEN_OPERATOR:
-            return f"{self.value}\t: operator"
+            return str(self.value)
         elif self.type == TOKEN_PARENTHESE:
-            return f"{self.value}\t: parenthese"
+            return str(self.value)
         elif self.type == TOKEN_EQUAL:
-            return "=\t: equal"
+            return '='
         return "unknow"
 
 
@@ -48,18 +48,19 @@ class Token:
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:
+
         if self.type == TOKEN_NONE:
             return ' ' * depth + "none"
         elif self.type == TOKEN_NUMBER:
-            return ' ' * depth + str(self.value)
+            return ' ' * depth + f"{self.value}\t: number"
         elif self.type == TOKEN_VARIABLE:
-            return ' ' * depth + str(self.value)
+            return ' ' * depth + f"{self.value}\t: variable"
         elif self.type == TOKEN_OPERATOR:
-            return ' ' * depth + str(self.value)
+            return ' ' * depth + f"{self.value}\t: operator"
         elif self.type == TOKEN_PARENTHESE:
-            return ' ' * depth + str(self.value)
+            return ' ' * depth + f"{self.value}\t: parenthese"
         elif self.type == TOKEN_EQUAL:
-            return ' ' * depth + "="
+            return ' ' * depth + "=\t: equal"
         return "unknow"
 
     # Is methods ###############################################################

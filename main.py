@@ -29,18 +29,30 @@ if __file__ != "__main__":
 
     print("\n====TOKENS====")
     for token in tokens:
-        print(token)
+        print(token.to_string())
 
     print("\n#################[SPLIT BY SPACE]#################")
     left_tokens, right_tokens = split_by_equal(tokens)
 
     print("\n====LEFT TOKENS====")
     for token in left_tokens:
-        print(token)
+        print(token.to_string())
 
     print("\n====RIGHT TOKENS====")
     for token in right_tokens:
-        print(token)
+        print(token.to_string())
 
     print("\n#################[CHECK OPERATORS]#################")
     operator_check(left_tokens, right_tokens)
+
+    print("\n#################[BEFORE SIMPLIFICATION]#################")
+
+    print("\n====LEFT TOKENS====")
+    for token in left_tokens:
+        print(token, end=' ')
+    print()
+
+    print("\n====RIGHT TOKENS====")
+    for token in right_tokens:
+        print(token, end=' ')
+    print()
