@@ -12,12 +12,12 @@
 
 from utils.print_utils import print_error
 
-TOKEN_NONE = "none"                # Value = none
-TOKEN_NUMBER = "number"            # Value = number (float)
-TOKEN_VARIABLE = "variable"        # Value = name
-TOKEN_OPERATOR = "operator"        # Value = which operator (+ - * / ^)
-TOKEN_PARENTHESES = "parentheses"  # Value = 'open' or 'close'
-TOKEN_EQUAL = "equal"              # Value = '='
+TOKEN_NONE = "none"                 # Value = none
+TOKEN_NUMBER = "number"             # Value = number (float)
+TOKEN_VARIABLE = "variable"         # Value = name
+TOKEN_OPERATOR = "operator"         # Value = which operator (+ - * / ^)
+TOKEN_PARENTHESE = "parentheses"    # Value = '(' or ')'
+TOKEN_EQUAL = "equal"               # Value = '='
 
 class Token:
     def __init__(self):
@@ -28,22 +28,59 @@ class Token:
 
     def __str__(self) -> str:
         if self.type == TOKEN_NONE:
-            return "(Token None)"
+            return "none"
         elif self.type == TOKEN_NUMBER:
-            return f"(Token number {self.value})"
+            return f"{self.value}\t: number"
         elif self.type == TOKEN_VARIABLE:
-            return f"(Token variable {self.value})"
+            return f"{self.value}\t: variable"
         elif self.type == TOKEN_OPERATOR:
-            return f"(Token operator {self.value})"
-        elif self.type == TOKEN_PARENTHESES:
-            return f"(Token parentheses {self.value})"
+            return f"{self.value}\t: operator"
+        elif self.type == TOKEN_PARENTHESE:
+            return f"{self.value}\t: parenthese"
         elif self.type == TOKEN_EQUAL:
-            return "(Token equal)"
-        return "(Token unknow)"
+            return "=\t: equal"
+        return "unknow"
 
 
     def __eq__(self, value) -> bool:
         return self.type == value.type and self.value == value.value
+
+    # String methods ###########################################################
+
+    def to_string(self) -> str:
+        if self.type == TOKEN_NONE:
+            return "none"
+        elif self.type == TOKEN_NUMBER:
+            return f"{self.value}"
+        elif self.type == TOKEN_VARIABLE:
+            return f"{self.value}"
+        elif self.type == TOKEN_OPERATOR:
+            return f"{self.value}"
+        elif self.type == TOKEN_PARENTHESE:
+            return f"{self.value}"
+        elif self.type == TOKEN_EQUAL:
+            return "="
+        return "unknow"
+
+    # Is methods ###############################################################
+
+    def is_none(self) -> bool:
+        return self.type == TOKEN_NONE
+
+    def is_number(self) -> bool:
+        return self.type == TOKEN_NUMBER
+
+    def is_variable(self) -> bool:
+        return self.type == TOKEN_VARIABLE
+
+    def is_operator(self) -> bool:
+        return self.type == TOKEN_OPERATOR
+
+    def is_parenthese(self) -> bool:
+        return self.type == TOKEN_PARENTHESE
+
+    def is_equal(self) -> bool:
+        return self.type == TOKEN_EQUAL
 
     # Static methods ###########################################################
 
@@ -89,14 +126,12 @@ class Token:
     def parse_parenthese(char: str):
         token = Token()
 
-        if char == '(':
-            token.value = "open"
-        elif char == ')':
-            token.value = "close"
+        if char in "()":
+            token.value = char
         else:
             print_error(f"'{char}' isn't a valid parenthese")
 
-        token.type = TOKEN_PARENTHESES
+        token.type = TOKEN_PARENTHESE
 
         return token
 

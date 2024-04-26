@@ -12,8 +12,9 @@
 
 import sys
 
-from parsing.parsing import get_tokens_from_input
-from parsing.split_equal import   split_by_equal
+from parsing.parsing import     get_tokens_from_input
+from parsing.split_equal import split_by_equal
+from parsing.operator import    operator_check
 
 if __file__ != "__main__":
     if len(sys.argv) != 2:
@@ -21,14 +22,14 @@ if __file__ != "__main__":
         print("Usage : python3 main.y <mathematical equation>")
         exit(1)
 
-    print("\n[PARSE INPUT]")
+    print("\n#################[PARSE INPUT]#################")
     tokens = get_tokens_from_input(sys.argv[1])
 
     print("\n====TOKENS====")
     for token in tokens:
         print(token)
 
-    print("\n[SPLIT BY SPACE]")
+    print("\n#################[SPLIT BY SPACE]#################")
     left_tokens, right_tokens = split_by_equal(tokens)
 
     print("\n====LEFT TOKENS====")
@@ -38,3 +39,6 @@ if __file__ != "__main__":
     print("\n====RIGHT TOKENS====")
     for token in right_tokens:
         print(token)
+
+    print("\n#################[CHECK OPERATORS]#################")
+    operator_check(left_tokens, right_tokens)

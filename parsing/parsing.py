@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 from utils.print_utils import print_error
-from parsing.ft_token import Token
+from type.token import Token
 
 def get_tokens_from_input(string: str) -> list:
     tokens = []
@@ -101,7 +101,8 @@ def get_end_number(string: str, length: int, i: int) -> int:
 
 def get_end_variable(string: str, length: int, i: int) -> int:
     while i < length:
-        if is_white_space(string[i]) or is_operator(string[i]):
+        if is_white_space(string[i]) or is_operator(string[i])\
+            or is_parentheses(string[i]):
             break
         i += 1
     return i

@@ -1,15 +1,13 @@
 from utils.print_utils import print_error
-from parsing.ft_token import Token
+from type.token import Token
 
 def split_by_equal(tokens: list) -> tuple:
-    equal = Token.parse_equal('=')
-
     size = len(tokens)
     start = 0
     length = 0
 
     while length < size:
-        if tokens[length] == equal:
+        if tokens[length].is_equal():
             break
         length += 1
 
@@ -27,7 +25,7 @@ def split_by_equal(tokens: list) -> tuple:
 
     length = start
     while length < size:
-        if tokens[length] == equal:
+        if tokens[length].is_equal():
             break
         length += 1
 
