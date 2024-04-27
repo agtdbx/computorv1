@@ -6,12 +6,10 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 21:01:52 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/28 00:26:38 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from utils.print_utils import   print_error
-from utils.math_utils import    pow
 from type.token import          Token
 from type.x import              X
 from type.parentheses import    Parentheses
@@ -39,10 +37,15 @@ def _parentheses_simplify(token):
         type_left = type(token.left)
         type_right = type(token.right)
 
-        if type_left == Parentheses and (type_right == Token or type_right == X):
+        if type_left == Parentheses \
+                and (type_right == Token or type_right == X):
             return _add_token_multiply_number_or_x(left.tokens[0], right)
-        if (type_left == Token or type_left == X) and type_right == Parentheses:
+        if (type_left == Token or type_left == X)\
+                and type_right == Parentheses:
             return _add_token_multiply_number_or_x(right.tokens[0], left)
+        if type_left == Parentheses and type_right == Parentheses:
+            return _add_token_multiply_parentheses(left.tokens[0],
+                                                   right.tokens[0])
 
     elif type_token == Division:
         token.left = _parentheses_simplify(token.left)
@@ -52,9 +55,11 @@ def _parentheses_simplify(token):
         type_left = type(token.left)
         type_right = type(token.right)
 
-        if type_left == Parentheses and (type_right == Token or type_right == X):
+        if type_left == Parentheses\
+                and (type_right == Token or type_right == X):
             return _add_token_divide_by_number_or_x(left.tokens[0], right)
-        if (type_left == Token or type_left == X) and type_right == Parentheses:
+        if (type_left == Token or type_left == X)\
+                and type_right == Parentheses:
             return _add_token_divide_number_or_x(right.tokens[0], left)
 
     return token
@@ -114,4 +119,9 @@ def _add_token_divide_number_or_x(token, value):
     if type_token == X or type_token == Token:
         return Division(value, token)
 
+    return token
+
+
+def _add_token_multiply_parentheses(token, value):
+    # (a + b) (c + d) = ac + ad + bc + bd
     return token

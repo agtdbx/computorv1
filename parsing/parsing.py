@@ -35,6 +35,8 @@ def get_tokens_from_input(string: str) -> list:
                 or (before == "operator" and start + 1 < length\
                     and string[start] == '-'\
                     and is_begin_number(string[start + 1])):
+            if before == "parentheses-close":
+                tokens.append(Token.parse_operator('*'))
             end = get_end_number(string, length, start)
             token = Token.parse_number(string[start:end])
             before = "number"
@@ -45,7 +47,9 @@ def get_tokens_from_input(string: str) -> list:
             before = "operator"
 
         elif is_parentheses(string[start]):
-            if before == "variable" and string[start] == '(':
+            if string[start] == '(' and (before == "variable"\
+                                        or before == "number" \
+                                        or before == "parentheses-close"):
                 tokens.append(Token.parse_operator('*'))
             end = start + 1
             token = Token.parse_parenthese(string[start:end])
