@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:04 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 11:37:14 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 13:55:16 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,10 @@ class X:
             string += f"^{self.power}"
 
         return string
+
+    def __eq__(self, value) -> bool:
+        return self.multiplication == value.multiplication\
+                and self.power == value.power
 
     # String methods ###########################################################
 

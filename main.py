@@ -45,6 +45,27 @@ if __file__ != "__main__":
     for token in right_tokens:
         print(token.to_string())
 
+    #print("\n====LEFT TOKENS====")
+    #for token in left_tokens:
+    #    print(token, end=' ')
+    #print()
+
+    #print("\n====RIGHT TOKENS====")
+    #for token in right_tokens:
+    #    print(token, end=' ')
+    #print()
+
+    simple_simplification(left_tokens, right_tokens)
+
+    print("\n#################[AFTER SIMPLIFICATION]#################")
+    print("\n====LEFT TOKENS====")
+    for token in left_tokens:
+        print(token.to_string())
+
+    print("\n====RIGHT TOKENS====")
+    for token in right_tokens:
+        print(token.to_string())
+
     print("\n====LEFT TOKENS====")
     for token in left_tokens:
         print(token, end=' ')
@@ -54,24 +75,3 @@ if __file__ != "__main__":
     for token in right_tokens:
         print(token, end=' ')
     print()
-
-    #simple_simplification(left_tokens, right_tokens)
-
-    #print("\n#################[AFTER SIMPLIFICATION]#################")
-    #print("\n====LEFT TOKENS====")
-    #for token in left_tokens:
-    #    print(token.to_string())
-
-    #print("\n====RIGHT TOKENS====")
-    #for token in right_tokens:
-    #    print(token.to_string())
-
-    #print("\n====LEFT TOKENS====")
-    #for token in left_tokens:
-    #    print(token, end=' ')
-    #print()
-
-    #print("\n====RIGHT TOKENS====")
-    #for token in right_tokens:
-    #    print(token, end=' ')
-    #print()

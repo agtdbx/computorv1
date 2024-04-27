@@ -84,6 +84,15 @@ class Token:
         return self.type == TOKEN_EQUAL
 
     # Static methods ###########################################################
+    # Creation -----------------------------------------------------------------
+
+    def create_number(number: float):
+        token = Token()
+        token.type = TOKEN_NUMBER
+        token.value = number
+        return token
+
+    # Parsing ------------------------------------------------------------------
 
     def parse_number(string: str):
         token = Token()

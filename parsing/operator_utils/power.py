@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:28:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 12:16:04 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 12:47:46 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,6 @@ def parse_power(tokens: list) -> bool:
         if i + 1 == len(tokens):
             print_error("need a value after the power")
 
-        divide = None
         before = tokens[i - 1]
         after = tokens[i + 1]
         type_before = type(before)
@@ -53,7 +52,7 @@ def parse_power(tokens: list) -> bool:
                 if before.value == 1.0:
                     tokens.pop(i)
                     tokens.pop(i)
-                    tokens[i - 1] = Token.parse_number('1')
+                    tokens[i - 1] = Token.create_number(1)
                     i += 1
                     continue
 
@@ -76,7 +75,7 @@ def parse_power(tokens: list) -> bool:
                 if number == 0.0:
                     tokens.pop(i)
                     tokens.pop(i)
-                    tokens[i - 1] = Token.parse_number('1')
+                    tokens[i - 1] = Token.create_number(1)
                     i += 1
                     modification += 1
                     continue
@@ -90,7 +89,6 @@ def parse_power(tokens: list) -> bool:
 
                 elif number < 0.0:
                     number = -number
-                    divide = number
 
                 if number != int(number):
                     print_error("number after the power can't be decimal")
@@ -107,14 +105,11 @@ def parse_power(tokens: list) -> bool:
         modification += 1
 
         if type_before == Token and before.is_number() and before.value == 0.0:
-            tokens[i - 1] = Token.parse_number('0')
+            tokens[i - 1] = Token.create_number(0)
             i += 1
             continue
 
         power = Power(before, after)
-
-        if divide != None:
-            pass #TODO: add the division
 
         tokens[i - 1] = power
 

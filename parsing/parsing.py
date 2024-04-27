@@ -20,8 +20,7 @@ def get_tokens_from_input(string: str) -> list:
     if length == 0:
         print_error("empty parameter")
 
-    number_before = False
-    operator_before = False
+    before = "operator"
 
     start = 0
     while start < length:
@@ -33,39 +32,36 @@ def get_tokens_from_input(string: str) -> list:
         token = None
 
         if is_begin_number(string[start])\
-                or (operator_before and start + 1 < length\
+                or (before == "operator" and start + 1 < length\
                     and string[start] == '-'\
                     and is_begin_number(string[start + 1])):
             end = get_end_number(string, length, start)
             token = Token.parse_number(string[start:end])
-            number_before = True
-            operator_before = False
+            before = "number"
 
         elif is_operator(string[start]):
             end = start + 1
             token = Token.parse_operator(string[start:end])
-            number_before = False
-            operator_before = True
+            before = "operator"
 
         elif is_parentheses(string[start]):
+            if before == "variable":
+                tokens.append(Token.parse_operator('*'))
             end = start + 1
             token = Token.parse_parenthese(string[start:end])
-            number_before = False
-            operator_before = False
+            before = "parentheses"
 
         elif string[start] == '=':
             end = start + 1
             token = Token.parse_equal(string[start:end])
-            number_before = False
-            operator_before = False
+            before = "equal"
 
         else:
-            if number_before:
+            if before == "number" or before == "parentheses":
                 tokens.append(Token.parse_operator('*'))
             end = get_end_variable(string, length, start)
             token = Token.parse_variable(string[start:end])
-            number_before = False
-            operator_before = False
+            before = "variable"
 
         tokens.append(token)
         start = end
