@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:30:18 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 11:30:44 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 12:24:23 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,20 @@ from type.token import          Token
 from type.parentheses import    Parentheses
 from type.operator import       Power, Multiplication, Division
 
-def parse_mult_div(tokens: list):
+def parse_mult_div(tokens: list) -> bool:
+    modification = 0
     i = 0
 
     while i < len(tokens):
         token_type = type(tokens[i])
 
         if token_type == Parentheses:
-            parse_mult_div(tokens[i].tokens)
+            modification += parse_mult_div(tokens[i].tokens)
 
         elif token_type == Power\
                 or token_type == Multiplication or token_type == Division:
-            parse_mult_div(tokens[i].get_tokens_left())
-            parse_mult_div(tokens[i].get_tokens_right())
+            modification += parse_mult_div(tokens[i].get_tokens_left())
+            modification += parse_mult_div(tokens[i].get_tokens_right())
 
         if not token_type == Token or not tokens[i].is_operator():
             i += 1
@@ -52,6 +53,7 @@ def parse_mult_div(tokens: list):
         after = tokens[i + 1]
         type_before = type(before)
         type_after = type(after)
+        modification += 1
 
         tokens.pop(i)
         tokens.pop(i)
@@ -67,12 +69,12 @@ def parse_mult_div(tokens: list):
                 continue
 
         elif type_before == Parentheses:
-            parse_mult_div(before.tokens)
+            modification += parse_mult_div(before.tokens)
 
         elif type_before == Power\
                 or type_before == Multiplication or type_before == Division:
-            parse_mult_div(before.get_tokens_left())
-            parse_mult_div(before.get_tokens_right())
+            modification += parse_mult_div(before.get_tokens_left())
+            modification += parse_mult_div(before.get_tokens_right())
 
         # Check right value
         if type_after == Token:
@@ -94,12 +96,12 @@ def parse_mult_div(tokens: list):
                     continue
 
         elif type_after == Parentheses:
-            parse_mult_div(after.tokens)
+            modification += parse_mult_div(after.tokens)
 
         elif type_after == Power\
                 or type_after == Multiplication or type_after == Division:
-            parse_mult_div(after.get_tokens_left())
-            parse_mult_div(after.get_tokens_right())
+            modification += parse_mult_div(after.get_tokens_left())
+            modification += parse_mult_div(after.get_tokens_right())
 
         if operator == '*':
             tokens[i - 1] = Multiplication(before, after)
@@ -107,3 +109,5 @@ def parse_mult_div(tokens: list):
             tokens[i - 1] = Division(before, after)
 
         i += 1
+
+    return modification > 0

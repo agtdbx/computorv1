@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:28:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 11:38:37 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 12:16:04 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,19 @@ from type.token import          Token
 from type.parentheses import    Parentheses
 from type.operator import       Power
 
-def parse_power(tokens: list):
+def parse_power(tokens: list) -> bool:
+    modification = 0
     i = 0
 
     while i < len(tokens):
         token_type = type(tokens[i])
 
         if token_type == Parentheses:
-            parse_power(tokens[i].tokens)
+            modification += parse_power(tokens[i].tokens)
 
         elif token_type == Power:
-            parse_power(tokens[i].get_tokens_left())
-            parse_power(tokens[i].get_tokens_right())
+            modification += parse_power(tokens[i].get_tokens_left())
+            modification += parse_power(tokens[i].get_tokens_right())
 
         if not token_type == Token or not tokens[i].is_operator()\
                 or tokens[i].value != '^':
@@ -57,11 +58,11 @@ def parse_power(tokens: list):
                     continue
 
         elif type_before == Parentheses:
-            parse_power(before.tokens)
+            modification += parse_power(before.tokens)
 
         elif token_type == Power:
-            parse_power(before.get_tokens_left())
-            parse_power(before.get_tokens_right())
+            modification += parse_power(before.get_tokens_left())
+            modification += parse_power(before.get_tokens_right())
 
         # Check right value
         if type_after == Token:
@@ -77,12 +78,14 @@ def parse_power(tokens: list):
                     tokens.pop(i)
                     tokens[i - 1] = Token.parse_number('1')
                     i += 1
+                    modification += 1
                     continue
 
                 if number == 1.0:
                     tokens.pop(i)
                     tokens.pop(i)
                     i += 1
+                    modification += 1
                     continue
 
                 elif number < 0.0:
@@ -93,14 +96,15 @@ def parse_power(tokens: list):
                     print_error("number after the power can't be decimal")
 
         elif type_after == Parentheses:
-            parse_power(after.tokens)
+            modification += parse_power(after.tokens)
 
         elif token_type == Power:
-            parse_power(after.get_tokens_left())
-            parse_power(after.get_tokens_right())
+            modification += parse_power(after.get_tokens_left())
+            modification += parse_power(after.get_tokens_right())
 
         tokens.pop(i)
         tokens.pop(i)
+        modification += 1
 
         if type_before == Token and before.is_number() and before.value == 0.0:
             tokens[i - 1] = Token.parse_number('0')
@@ -113,3 +117,5 @@ def parse_power(tokens: list):
             pass #TODO: add the division
 
         tokens[i - 1] = power
+
+    return (modification > 0)

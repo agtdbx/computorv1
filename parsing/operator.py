@@ -23,15 +23,7 @@ def operator_check(left_tokens: list, right_tokens: list):
     parse_parentheses(left_tokens)
     parse_parentheses(right_tokens)
 
-    parse_power(left_tokens)
-    parse_power(right_tokens)
-
-    parse_mult_div(left_tokens)
-    parse_mult_div(right_tokens)
-
-    parse_add_sub(left_tokens)
-    parse_add_sub(right_tokens)
-
+    print("\n#################[BEFORE PARENTHESE]#################")
     print("\n====LEFT TOKENS====")
     for token in left_tokens:
         print(token.to_string())
@@ -40,3 +32,11 @@ def operator_check(left_tokens: list, right_tokens: list):
     for token in right_tokens:
         print(token.to_string())
 
+    while parse_power(left_tokens): pass
+    while parse_power(right_tokens): pass
+
+    while parse_mult_div(left_tokens): pass
+    while parse_mult_div(right_tokens): pass
+
+    while parse_add_sub(left_tokens): pass
+    while parse_add_sub(right_tokens): pass

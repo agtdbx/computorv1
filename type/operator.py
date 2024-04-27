@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 11:32:45 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 12:27:14 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -202,7 +202,7 @@ class Addition:
         elif right_type == Power\
                 or right_type == Multiplication or right_type == Division\
                 or right_type == Addition or right_type == Substraction:
-            return self.left.get_tokens_left()
+            return self.right.get_tokens_right()
 
         return []
 
@@ -251,6 +251,6 @@ class Substraction:
         elif right_type == Power\
                 or right_type == Multiplication or right_type == Division\
                 or right_type == Addition or right_type == Substraction:
-            return self.left.get_tokens_left()
+            return self.right.get_tokens_right()
 
         return []

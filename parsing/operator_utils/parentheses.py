@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:28:33 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 11:38:12 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 12:17:24 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ def parse_parentheses(tokens: list):
         i += 1
 
         while i < len(tokens) and depth_count > 0:
-            if tokens[i].is_parenthese():
+            if type(tokens[i]) == Token and tokens[i].is_parenthese():
                 if tokens[i].value == '(':
                     depth_count += 1
                 else:
