@@ -45,11 +45,14 @@ def get_tokens_from_input(string: str) -> list:
             before = "operator"
 
         elif is_parentheses(string[start]):
-            if before == "variable":
+            if before == "variable" and string[start] == '(':
                 tokens.append(Token.parse_operator('*'))
             end = start + 1
             token = Token.parse_parenthese(string[start:end])
-            before = "parentheses"
+            if string[start] == '(':
+                before = "parentheses-open"
+            else:
+                before = "parentheses-close"
 
         elif string[start] == '=':
             end = start + 1
@@ -57,7 +60,7 @@ def get_tokens_from_input(string: str) -> list:
             before = "equal"
 
         else:
-            if before == "number" or before == "parentheses":
+            if before == "number" or before == "parentheses-close":
                 tokens.append(Token.parse_operator('*'))
             end = get_end_variable(string, length, start)
             token = Token.parse_variable(string[start:end])
