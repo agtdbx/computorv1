@@ -12,10 +12,11 @@
 
 import sys
 
-from parsing.parsing import         get_tokens_from_input
-from parsing.split_equal import     split_by_equal
-from parsing.operator import        operator_check
-from simplification.simple import   simple_simplification
+from parsing.parsing import             get_tokens_from_input
+from parsing.split_equal import         split_by_equal
+from parsing.operator import            operator_check
+from simplification.simple import       simple_simplification
+from simplification.parentheses import  parentheses_simplification
 
 if __file__ != "__main__":
     if len(sys.argv) != 2:
@@ -55,6 +56,7 @@ if __file__ != "__main__":
     #    print(token, end=' ')
     #print()
 
+    parentheses_simplification(left_tokens, right_tokens)
     simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[AFTER SIMPLIFICATION]#################")
@@ -66,12 +68,12 @@ if __file__ != "__main__":
     for token in right_tokens:
         print(token.to_string())
 
-    #print("\n====LEFT TOKENS====")
-    #for token in left_tokens:
-    #    print(token, end=' ')
-    #print()
+    print("\n====LEFT PART====")
+    for token in left_tokens:
+        print(token, end=' ')
+    print()
 
-    #print("\n====RIGHT TOKENS====")
+    #print("\n====RIGHT PART====")
     #for token in right_tokens:
     #    print(token, end=' ')
     #print()

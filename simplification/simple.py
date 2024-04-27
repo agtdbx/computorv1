@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 14:30:16 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 20:52:43 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,8 @@ def _simple_simplify(token):
             return Token.create_number(result)
 
         elif type_left == X and type_right == X:
+            if left.power != right.power:
+                return token
             left.multiplication += right.multiplication
             return left
 

@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 16:15:39 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 21:01:52 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ def _parentheses_simplify(token):
         type_left = type(token.left)
         type_right = type(token.right)
 
-        if type_left == Parentheses and type_right == Token:
-            return _parentheses_multiply_number(left, right)
-        if type_left == Token and type_right == Parentheses:
-            return _parentheses_multiply_number(right, left)
+        if type_left == Parentheses and (type_right == Token or type_right == X):
+            return _add_token_multiply_number_or_x(left.tokens[0], right)
+        if (type_left == Token or type_left == X) and type_right == Parentheses:
+            return _add_token_multiply_number_or_x(right.tokens[0], left)
 
     elif type_token == Division:
         token.left = _parentheses_simplify(token.left)
@@ -52,8 +52,66 @@ def _parentheses_simplify(token):
         type_left = type(token.left)
         type_right = type(token.right)
 
+        if type_left == Parentheses and (type_right == Token or type_right == X):
+            return _add_token_divide_by_number_or_x(left.tokens[0], right)
+        if (type_left == Token or type_left == X) and type_right == Parentheses:
+            return _add_token_divide_number_or_x(right.tokens[0], left)
+
     return token
 
 
-def _parentheses_multiply_number(parentheses: Parentheses, number: Token):
-    return Token()
+def _add_token_multiply_number_or_x(token, value):
+    type_token = type(token)
+
+    if type_token == Addition or type_token == Substraction:
+        token.left = _add_token_multiply_number_or_x(token.left, value)
+        token.right = _add_token_multiply_number_or_x(token.right, value)
+        return token
+
+    if type_token == Multiplication or type_token == Division:
+        token.left = Multiplication(token.left, value)
+        token.right = Multiplication(token.right, value)
+        return token
+
+    if type_token == X or type_token == Token:
+        return Multiplication(token, value)
+
+    return token
+
+
+def _add_token_divide_by_number_or_x(token, value):
+    type_token = type(token)
+
+    if type_token == Addition or type_token == Substraction:
+        token.left = _add_token_divide_by_number_or_x(token.left, value)
+        token.right = _add_token_divide_by_number_or_x(token.right, value)
+        return token
+
+    if type_token == Division or type_token == Division:
+        token.left = Division(token.left, value)
+        token.right = Division(token.right, value)
+        return token
+
+    if type_token == X or type_token == Token:
+        return Division(token, value)
+
+    return token
+
+
+def _add_token_divide_number_or_x(token, value):
+    type_token = type(token)
+
+    if type_token == Addition or type_token == Substraction:
+        token.left = _add_token_divide_number_or_x(token.left, value)
+        token.right = _add_token_divide_number_or_x(token.right, value)
+        return token
+
+    if type_token == Division or type_token == Division:
+        token.left = Division(value, token.left)
+        token.right = Division(value, token.right)
+        return token
+
+    if type_token == X or type_token == Token:
+        return Division(value, token)
+
+    return token
