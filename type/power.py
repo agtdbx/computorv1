@@ -29,9 +29,33 @@ class Power:
         depth += 2
 
         string += self.number.to_string(depth) + '\n'
-        string += self.power.to_string(depth) + '\n'
+        string += self.power.to_string(depth)
 
         return string
+
+    # Getters ##################################################################
+
+    def get_tokens_left(self) -> list:
+        number_type = type(self.number)
+
+        if number_type == Parentheses:
+            return self.number.tokens
+
+        elif number_type == Power:
+            return self.number.get_tokens_left()
+
+        return []
+
+    def get_tokens_right(self) -> list:
+        power_type = type(self.power)
+
+        if power_type == Parentheses:
+            return self.power.tokens
+
+        elif power_type == Power:
+            return self.number.get_tokens_right()
+
+        return []
 
     # Static methods ###########################################################
 
@@ -39,22 +63,33 @@ class Power:
         i = 0
 
         while i < len(tokens):
-            if type(tokens[i]) == Parentheses:
-                Power.parse_power(tokens[i].tokens)
-                i += 1
-                continue
+            token_type = type(tokens[i])
 
-            if not type(tokens[i]) == Token or not tokens[i].is_operator()\
+            if token_type == Parentheses:
+                Power.parse_power(tokens[i].tokens)
+
+            elif token_type == Power:
+                Power.parse_power(tokens[i].get_tokens_left())
+                Power.parse_power(tokens[i].get_tokens_right())
+
+            if not token_type == Token or not tokens[i].is_operator()\
                     or tokens[i].value != '^':
                 i += 1
                 continue
 
             if i == 0:
                 print_error("need a value before the power")
+            if i + 1 == len(tokens):
+                print_error("need a value after the power")
 
+            divide = None
             before = tokens[i - 1]
+            after = tokens[i + 1]
+            type_before = type(before)
+            type_after = type(after)
 
-            if type(before) == Token:
+            # Check left value
+            if type_before == Token:
                 if before.is_operator():
                     print_error("value before the power can't be an operator")
                 elif before.is_number():
@@ -65,12 +100,15 @@ class Power:
                         i += 1
                         continue
 
-            if i + 1 == len(tokens):
-                print_error("need a value after the power")
+            elif type_before == Parentheses:
+                Power.parse_power(before.tokens)
 
-            divide = None
-            after = tokens[i + 1]
-            if type(after) == Token:
+            elif token_type == Power:
+                Power.parse_power(before.get_tokens_left())
+                Power.parse_power(before.get_tokens_right())
+
+            # Check right value
+            if type_after == Token:
                 if after.is_operator():
                     print_error("value after the power can't be an operator")
                 elif after.is_variable():
@@ -98,13 +136,17 @@ class Power:
                     if number != int(number):
                         print_error("number after the power can't be decimal")
 
-            elif type(after) == Parentheses:
+            elif type_after == Parentheses:
                 Power.parse_power(after.tokens)
 
+            elif token_type == Power:
+                Power.parse_power(after.get_tokens_left())
+                Power.parse_power(after.get_tokens_right())
+
             tokens.pop(i)
             tokens.pop(i)
 
-            if type(before) == Token and before.is_number() and before.value == 0.0:
+            if type_before == Token and before.is_number() and before.value == 0.0:
                 tokens[i - 1] = Token.parse_number('0')
                 i += 1
                 continue

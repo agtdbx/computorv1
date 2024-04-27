@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:04 by auguste           #+#    #+#              #
-#    Updated: 2024/04/26 21:52:36 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/27 00:43:02 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ class X:
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:
-        string = ' ' * depth + f"x[{self.multiplication},{self.power}]\n"
+        string = ' ' * depth + f"x[{self.multiplication},{self.power}]"
 
         return string
 

@@ -31,16 +31,7 @@ if __file__ != "__main__":
     for token in tokens:
         print(token.to_string())
 
-    print("\n#################[SPLIT BY SPACE]#################")
     left_tokens, right_tokens = split_by_equal(tokens)
-
-    print("\n====LEFT TOKENS====")
-    for token in left_tokens:
-        print(token.to_string())
-
-    print("\n====RIGHT TOKENS====")
-    for token in right_tokens:
-        print(token.to_string())
 
     print("\n#################[CHECK OPERATORS]#################")
     operator_check(left_tokens, right_tokens)

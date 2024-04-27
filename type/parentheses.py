@@ -35,7 +35,9 @@ class Parentheses:
         depth += 2
 
         for i in range(len(self.tokens)):
-            string += self.tokens[i].to_string(depth) + '\n'
+            if i != 0:
+                string += '\n'
+            string += self.tokens[i].to_string(depth)
 
         return string
 
