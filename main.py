@@ -12,10 +12,10 @@
 
 import sys
 
-from parsing.parsing import                 get_tokens_from_input
-from parsing.split_equal import             split_by_equal
-from parsing.operator import                operator_check
-from simplification.simple.simple import    simple_simplification
+from parsing.parsing import         get_tokens_from_input
+from parsing.split_equal import     split_by_equal
+from parsing.operator import        operator_check
+from simplification.simple import   simple_simplification
 
 if __file__ != "__main__":
     if len(sys.argv) != 2:
