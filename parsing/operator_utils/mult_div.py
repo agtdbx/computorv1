@@ -5,96 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 02:25:07 by auguste          ###   ########.fr        #
+#    Created: 2024/04/27 11:30:18 by auguste           #+#    #+#              #
+#    Updated: 2024/04/27 11:30:44 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from utils.print_utils import   print_error
 from type.token import          Token
 from type.parentheses import    Parentheses
-from type.power import          Power
-
-class Multiplication:
-    def __init__(self, left, right) -> None:
-        self.left = left
-        self.right = right
-
-    def __str__(self) -> str:
-        return str(self.left) + " * " + str(self.right)
-
-    # String methods ###########################################################
-
-    def to_string(self, depth=0) -> str:
-        string = ' ' * depth + "mutiplication :\n"
-        depth += 2
-
-        string += self.left.to_string(depth) + '\n'
-        string += self.right.to_string(depth)
-
-        return string
-
-    # Getters ##################################################################
-
-    def get_tokens_left(self) -> list:
-        if type(self.left) == Parentheses:
-            return self.left.tokens
-        return []
-
-    def get_tokens_right(self) -> list:
-        if type(self.right) == Parentheses:
-            return self.right.tokens
-        return []
-
-
-
-class Division:
-    def __init__(self, left, right) -> None:
-        self.left = left
-        self.right = right
-
-    def __str__(self) -> str:
-        return str(self.left) + " / " + str(self.right)
-
-    # String methods ###########################################################
-
-    def to_string(self, depth=0) -> str:
-        string = ' ' * depth + "division :\n"
-        depth += 2
-
-        string += self.left.to_string(depth) + '\n'
-        string += self.right.to_string(depth)
-
-        return string
-
-    # Getters ##################################################################
-
-    def get_tokens_left(self) -> list:
-        left_type = type(self.left)
-
-        if left_type == Parentheses:
-            return self.left.tokens
-
-        elif left_type == Power\
-                or left_type == Multiplication or left_type == Division:
-            return self.left.get_tokens_left()
-
-        return []
-
-    def get_tokens_right(self) -> list:
-        right_type = type(self.right)
-
-        if right_type == Parentheses:
-            return self.right.tokens
-
-        elif right_type == Power\
-                or right_type == Multiplication or right_type == Division:
-            return self.right.get_tokens_right()
-
-        return []
-
-
-# Parsing function ###########################################################
+from type.operator import       Power, Multiplication, Division
 
 def parse_mult_div(tokens: list):
     i = 0

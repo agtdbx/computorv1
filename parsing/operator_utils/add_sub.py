@@ -5,97 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 02:24:56 by auguste          ###   ########.fr        #
+#    Created: 2024/04/27 11:28:31 by auguste           #+#    #+#              #
+#    Updated: 2024/04/27 11:33:07 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from utils.print_utils import   print_error
 from type.token import          Token
 from type.parentheses import    Parentheses
-from type.power import          Power
-from type.mult_div import       Multiplication, Division
-
-class Addition:
-    def __init__(self, left, right) -> None:
-        self.left = left
-        self.right = right
-
-    def __str__(self) -> str:
-        return str(self.left) + " + " + str(self.right)
-
-    # String methods ###########################################################
-
-    def to_string(self, depth=0) -> str:
-        string = ' ' * depth + "addition :\n"
-        depth += 2
-
-        string += self.left.to_string(depth) + '\n'
-        string += self.right.to_string(depth)
-
-        return string
-
-    # Getters ##################################################################
-
-    def get_tokens_left(self) -> list:
-        if type(self.left) == Parentheses:
-            return self.left.tokens
-        return []
-
-    def get_tokens_right(self) -> list:
-        if type(self.right) == Parentheses:
-            return self.right.tokens
-        return []
-
-
-class Substraction:
-    def __init__(self, left, right) -> None:
-        self.left = left
-        self.right = right
-
-    def __str__(self) -> str:
-        return str(self.left) + " - " + str(self.right)
-
-    # String methods ###########################################################
-
-    def to_string(self, depth=0) -> str:
-        string = ' ' * depth + "substraction :\n"
-        depth += 2
-
-        string += self.left.to_string(depth) + '\n'
-        string += self.right.to_string(depth)
-
-        return string
-
-    # Getters ##################################################################
-
-    def get_tokens_left(self) -> list:
-        left_type = type(self.left)
-
-        if left_type == Parentheses:
-            return self.left.tokens
-
-        elif left_type == Power\
-                or left_type == Multiplication or left_type == Division\
-                or left_type == Addition or left_type == Substraction:
-            return self.left.get_tokens_left()
-
-        return []
-
-    def get_tokens_right(self) -> list:
-        right_type = type(self.right)
-
-        if right_type == Parentheses:
-            return self.right.tokens
-
-        elif right_type == Power\
-                or right_type == Multiplication or right_type == Division\
-                or right_type == Addition or right_type == Substraction:
-            return self.left.get_tokens_left()
-
-        return []
-
-# Parsing function ###########################################################
+from type.operator import       Power, Multiplication, Division, Addition,\
+                                Substraction
 
 def parse_add_sub(tokens: list):
     i = 0
