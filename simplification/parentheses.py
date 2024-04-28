@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 12:09:50 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/28 12:46:55 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,9 +50,8 @@ def _parentheses_simplify(token):
             for tok in right.tokens:
                 sub_tokens.append(_add_token_multiply_number_or_x(tok, left))
             return Parentheses(sub_tokens)
-        #if type_left == Parentheses and type_right == Parentheses:
-        #    return _add_token_multiply_parentheses(left.tokens[0],
-        #                                           right.tokens[0])
+        if type_left == Parentheses and type_right == Parentheses:
+            return _add_token_multiply_parentheses(left, right)
 
     elif type_token == Division:
         token.left = _parentheses_simplify(token.left)
@@ -110,6 +109,11 @@ def _add_token_divide_by_number_or_x(token, value):
     return token
 
 
-def _add_token_multiply_parentheses(token, value):
+def _add_token_multiply_parentheses(left: Parentheses, right: Parentheses):
     # (a + b) (c + d) = ac + ad + bc + bd
-    return token
+    sub_tokens = []
+    for ltok in left.tokens:
+        for rtok in right.tokens:
+            sub_tokens.append(Multiplication(ltok, rtok))
+
+    return Parentheses(sub_tokens)
