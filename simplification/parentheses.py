@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 00:26:38 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/28 10:54:50 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,9 @@ def _parentheses_simplify(token):
         if (type_left == Token or type_left == X)\
                 and type_right == Parentheses:
             return _add_token_multiply_number_or_x(right.tokens[0], left)
-        if type_left == Parentheses and type_right == Parentheses:
-            return _add_token_multiply_parentheses(left.tokens[0],
-                                                   right.tokens[0])
+        #if type_left == Parentheses and type_right == Parentheses:
+        #    return _add_token_multiply_parentheses(left.tokens[0],
+        #                                           right.tokens[0])
 
     elif type_token == Division:
         token.left = _parentheses_simplify(token.left)

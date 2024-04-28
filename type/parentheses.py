@@ -22,7 +22,7 @@ class Parentheses:
 
         for i in range(len(self.tokens)):
             if i != 0:
-                string += ' '
+                string += " + "
             string += str(self.tokens[i])
 
         string += ')'

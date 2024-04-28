@@ -16,8 +16,26 @@ from parsing.parsing import             get_tokens_from_input
 from parsing.split_equal import         split_by_equal
 from parsing.operator import            operator_check
 from simplification.negative import     inverse_negative_simplification
+from simplification.split_by_add import split_by_add_simplification
 from simplification.parentheses import  parentheses_simplification
 from simplification.simple import       simple_simplification
+
+
+def print_token(tokens: list, side):
+    print(f"\n===={side} TOKENS====")
+    for token in tokens:
+        print(token.to_string())
+
+
+def print_equation(tokens: list, side):
+    print(f"\n===={side} PART====")
+    for i in range(len(tokens)):
+        if i != 0:
+            print(" + ", end='')
+        print(tokens[i], end='')
+    print()
+
+
 
 if __file__ != "__main__":
     if len(sys.argv) != 2:
@@ -29,53 +47,22 @@ if __file__ != "__main__":
 
     tokens = get_tokens_from_input(sys.argv[1])
 
-    #print("\n#################[PARSE INPUT]#################")
-    #print("\n====TOKENS====")
-    #for token in tokens:
-    #    print(token.to_string())
-
     left_tokens, right_tokens = split_by_equal(tokens)
 
     operator_check(left_tokens, right_tokens)
 
     print("\n#################[BEFORE SIMPLIFICATION]#################")
-    print("\n====LEFT TOKENS====")
-    for token in left_tokens:
-        print(token.to_string())
-
-    print("\n====RIGHT TOKENS====")
-    for token in right_tokens:
-        print(token.to_string())
-
-    #print("\n====LEFT TOKENS====")
-    #for token in left_tokens:
-    #    print(token, end=' ')
-    #print()
-
-    #print("\n====RIGHT TOKENS====")
-    #for token in right_tokens:
-    #    print(token, end=' ')
-    #print()
+    print_token(left_tokens, "LEFT")
+    print_token(left_tokens, "RIGHT")
 
     inverse_negative_simplification(left_tokens, right_tokens)
-    parentheses_simplification(left_tokens, right_tokens)
+    left_tokens = split_by_add_simplification(left_tokens)
+    right_tokens = split_by_add_simplification(right_tokens)
+    #parentheses_simplification(left_tokens, right_tokens)
     #simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[AFTER SIMPLIFICATION]#################")
-    print("\n====LEFT TOKENS====")
-    for token in left_tokens:
-        print(token.to_string())
-
-    print("\n====RIGHT TOKENS====")
-    for token in right_tokens:
-        print(token.to_string())
-
-    print("\n====LEFT PART====")
-    for token in left_tokens:
-        print(token, end=' ')
-    print()
-
-    #print("\n====RIGHT PART====")
-    #for token in right_tokens:
-    #    print(token, end=' ')
-    #print()
+    print_token(left_tokens, "LEFT")
+    print_token(left_tokens, "RIGHT")
+    print_equation(left_tokens, "LEFT")
+    #print_equation(left_tokens, "RIGHT")
