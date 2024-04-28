@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 20:52:43 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/28 12:41:33 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ from utils.math_utils import    pow
 from type.token import          Token
 from type.x import              X
 from type.parentheses import    Parentheses
-from type.operator import       Power, Multiplication, Division, Addition,\
-                                Substraction
+from type.operator import       Power, Multiplication, Division, Addition
 
 def simple_simplification(left_tokens: list, right_tokens: list):
     _simple_simplification(left_tokens)
@@ -26,6 +25,17 @@ def simple_simplification(left_tokens: list, right_tokens: list):
 def _simple_simplification(tokens: list):
     for i in range(len(tokens)):
         tokens[i] = _simple_simplify(tokens[i])
+
+    lenght = 0
+    while lenght != len(tokens) and len(tokens) > 1:
+        lenght = len(tokens)
+        left = tokens[0]
+        right = tokens[1]
+        tokens[0] = _simple_simplify(Addition(left, right))
+        if type(tokens[0]) == Addition:
+            tokens[0] = left
+        else:
+            tokens.pop(1)
 
 
 def _simple_simplify(token):
@@ -126,29 +136,9 @@ def _simple_simplify(token):
             left.multiplication += right.multiplication
             return left
 
-    # Substraction #############################################################
-    elif type_token == Substraction:
-        token.left = _simple_simplify(token.left)
-        token.right = _simple_simplify(token.right)
-        left = token.left
-        right = token.right
-        type_left = type(token.left)
-        type_right = type(token.right)
-
-        if type_left == Token and type_right == Token:
-            result = left.value - right.value
-            return Token.create_number(result)
-
-        elif type_left == X and type_right == X:
-            if left.power != right.power:
-                return token
-            left.multiplication -= right.multiplication
-            return left
-
     # Parentheses ##############################################################
     elif type_token == Parentheses:
-        for i in range(len(token.tokens)):
-            token.tokens[i] = _simple_simplify(token.tokens[i])
+        _simple_simplification(token.tokens)
 
         if len(token.tokens) == 1\
             and (type(token.tokens[0]) == Token or type(token.tokens[0]) == X):

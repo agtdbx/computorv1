@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 10:54:50 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/28 12:09:50 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,17 @@ def _parentheses_simplify(token):
 
         if type_left == Parentheses \
                 and (type_right == Token or type_right == X):
-            return _add_token_multiply_number_or_x(left.tokens[0], right)
+            sub_tokens = []
+            for tok in left.tokens:
+                sub_tokens.append(_add_token_multiply_number_or_x(tok, right))
+            return Parentheses(sub_tokens)
+
         if (type_left == Token or type_left == X)\
                 and type_right == Parentheses:
-            return _add_token_multiply_number_or_x(right.tokens[0], left)
+            sub_tokens = []
+            for tok in right.tokens:
+                sub_tokens.append(_add_token_multiply_number_or_x(tok, left))
+            return Parentheses(sub_tokens)
         #if type_left == Parentheses and type_right == Parentheses:
         #    return _add_token_multiply_parentheses(left.tokens[0],
         #                                           right.tokens[0])
@@ -57,10 +64,10 @@ def _parentheses_simplify(token):
 
         if type_left == Parentheses\
                 and (type_right == Token or type_right == X):
-            return _add_token_divide_by_number_or_x(left.tokens[0], right)
-        if (type_left == Token or type_left == X)\
-                and type_right == Parentheses:
-            return _add_token_divide_number_or_x(right.tokens[0], left)
+            sub_tokens = []
+            for tok in left.tokens:
+                sub_tokens.append(_add_token_divide_by_number_or_x(tok, right))
+            return Parentheses(sub_tokens)
 
     return token
 
@@ -99,25 +106,6 @@ def _add_token_divide_by_number_or_x(token, value):
 
     if type_token == X or type_token == Token:
         return Division(token, value)
-
-    return token
-
-
-def _add_token_divide_number_or_x(token, value):
-    type_token = type(token)
-
-    if type_token == Addition or type_token == Substraction:
-        token.left = _add_token_divide_number_or_x(token.left, value)
-        token.right = _add_token_divide_number_or_x(token.right, value)
-        return token
-
-    if type_token == Division or type_token == Division:
-        token.left = Division(value, token.left)
-        token.right = Division(value, token.right)
-        return token
-
-    if type_token == X or type_token == Token:
-        return Division(value, token)
 
     return token
 
