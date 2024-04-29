@@ -16,6 +16,7 @@ from parsing.operator_utils.power import        parse_power
 from parsing.operator_utils.mult_div import     parse_mult_div
 from parsing.operator_utils.add_sub import      parse_add_sub
 
+
 def operator_check(left_tokens: list, right_tokens: list):
     parse_x(left_tokens)
     parse_x(right_tokens)

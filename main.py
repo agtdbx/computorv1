@@ -51,7 +51,7 @@ if __file__ != "__main__":
 
     operator_check(left_tokens, right_tokens)
 
-    #print("\n#################[BEFORE SIMPLIFICATION]#################")
+    print("\n#################[BEFORE SIMPLIFICATION]#################")
     print_token(left_tokens, "LEFT")
     print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
@@ -61,9 +61,9 @@ if __file__ != "__main__":
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
     parentheses_simplification(left_tokens, right_tokens)
-    #simple_simplification(left_tokens, right_tokens)
+    simple_simplification(left_tokens, right_tokens)
 
-    #print("\n#################[AFTER SIMPLIFICATION]#################")
+    print("\n#################[AFTER SIMPLIFICATION]#################")
     print_token(left_tokens, "LEFT")
     print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")

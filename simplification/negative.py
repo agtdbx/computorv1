@@ -13,8 +13,7 @@
 from type.token import          Token
 from type.x import              X
 from type.parentheses import    Parentheses
-from type.operator import       Power, Multiplication, Division, Addition,\
-                                Substraction
+from type.operator import       Addition, Substraction
 
 def inverse_negative_simplification(left_tokens: list, right_tokens: list):
     _inverse_negative_in_list(left_tokens)

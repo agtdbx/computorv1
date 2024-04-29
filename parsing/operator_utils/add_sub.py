@@ -16,7 +16,7 @@ from type.parentheses import    Parentheses
 from type.operator import       Power, Multiplication, Division, Addition,\
                                 Substraction
 
-def parse_add_sub(tokens: list):
+def parse_add_sub(tokens: list)-> bool:
     modification = 0
     i = 0
 

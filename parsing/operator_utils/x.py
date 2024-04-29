@@ -14,7 +14,7 @@ from utils.print_utils import   print_error
 from type.token import  Token
 from type.x import      X
 
-def parse_x(tokens: list[Token]):
+def parse_x(tokens: list):
     i = 0
 
     while i < len(tokens):

@@ -18,11 +18,11 @@ from type.parentheses import    Parentheses
 # Power ########################################################################
 class Power:
     def __init__(self, number, power) -> None:
-        self.number = number
-        self.power = power
+        self.left = number
+        self.right = power
 
     def __str__(self) -> str:
-        return str(self.number) + '^' + str(self.power)
+        return str(self.left) + '^' + str(self.right)
 
     # String methods ###########################################################
 
@@ -30,32 +30,36 @@ class Power:
         string = ' ' * depth + "power :\n"
         depth += 2
 
-        string += self.number.to_string(depth) + '\n'
-        string += self.power.to_string(depth)
+        string += self.left.to_string(depth) + '\n'
+        string += self.right.to_string(depth)
 
         return string
 
     # Getters ##################################################################
 
     def get_tokens_left(self) -> list:
-        number_type = type(self.number)
+        left_type = type(self.left)
 
-        if number_type == Parentheses:
-            return self.number.tokens
+        if left_type == Parentheses:
+            return self.left.tokens
 
-        elif number_type == Power:
-            return self.number.get_tokens_left()
+        elif left_type == Power\
+                or left_type == Multiplication or left_type == Division\
+                or left_type == Addition or left_type == Substraction:
+            return [self.left]
 
         return []
 
     def get_tokens_right(self) -> list:
-        power_type = type(self.power)
+        right_type = type(self.right)
 
-        if power_type == Parentheses:
-            return self.power.tokens
+        if right_type == Parentheses:
+            return self.right.tokens
 
-        elif power_type == Power:
-            return self.number.get_tokens_right()
+        elif right_type == Power\
+                or right_type == Multiplication or right_type == Division\
+                or right_type == Addition or right_type == Substraction:
+            return [self.right]
 
         return []
 
@@ -90,8 +94,9 @@ class Multiplication:
             return self.left.tokens
 
         elif left_type == Power\
-                or left_type == Multiplication or left_type == Division:
-            return self.left.get_tokens_left()
+                or left_type == Multiplication or left_type == Division\
+                or left_type == Addition or left_type == Substraction:
+            return [self.left]
 
         return []
 
@@ -102,8 +107,9 @@ class Multiplication:
             return self.right.tokens
 
         elif right_type == Power\
-                or right_type == Multiplication or right_type == Division:
-            return self.right.get_tokens_right()
+                or right_type == Multiplication or right_type == Division\
+                or right_type == Addition or right_type == Substraction:
+            return [self.right]
 
         return []
 
@@ -139,8 +145,9 @@ class Division:
             return self.left.tokens
 
         elif left_type == Power\
-                or left_type == Multiplication or left_type == Division:
-            return self.left.get_tokens_left()
+                or left_type == Multiplication or left_type == Division\
+                or left_type == Addition or left_type == Substraction:
+            return [self.left]
 
         return []
 
@@ -151,8 +158,9 @@ class Division:
             return self.right.tokens
 
         elif right_type == Power\
-                or right_type == Multiplication or right_type == Division:
-            return self.right.get_tokens_right()
+                or right_type == Multiplication or right_type == Division\
+                or right_type == Addition or right_type == Substraction:
+            return [self.right]
 
         return []
 
@@ -189,7 +197,7 @@ class Addition:
         elif left_type == Power\
                 or left_type == Multiplication or left_type == Division\
                 or left_type == Addition or left_type == Substraction:
-            return self.left.get_tokens_left()
+            return [self.left]
 
         return []
 
@@ -202,7 +210,7 @@ class Addition:
         elif right_type == Power\
                 or right_type == Multiplication or right_type == Division\
                 or right_type == Addition or right_type == Substraction:
-            return self.right.get_tokens_right()
+            return [self.right]
 
         return []
 
@@ -238,7 +246,7 @@ class Substraction:
         elif left_type == Power\
                 or left_type == Multiplication or left_type == Division\
                 or left_type == Addition or left_type == Substraction:
-            return self.left.get_tokens_left()
+            return [self.left]
 
         return []
 
@@ -251,6 +259,6 @@ class Substraction:
         elif right_type == Power\
                 or right_type == Multiplication or right_type == Division\
                 or right_type == Addition or right_type == Substraction:
-            return self.right.get_tokens_right()
+            return [self.right]
 
         return []

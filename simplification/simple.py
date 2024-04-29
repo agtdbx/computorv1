@@ -46,24 +46,24 @@ def _simple_simplify(token):
 
     # Power ####################################################################
     elif type_token == Power:
-        token.number = _simple_simplify(token.number)
-        token.power = _simple_simplify(token.power)
-        number = token.number
-        power = token.power
-        type_number = type(token.number)
-        type_power = type(token.power)
+        token.left = _simple_simplify(token.left)
+        token.right = _simple_simplify(token.right)
+        left = token.left
+        right = token.right
+        type_left = type(token.left)
+        type_right = type(token.right)
 
-        if type_number == Token and type_power == Token:
-            if int(power.value) != power.value:
+        if type_left == Token and type_right == Token:
+            if int(right.value) != right.value:
                 print_error("power by decimal")
-            result = pow(number.value, power.value)
+            result = pow(left.value, right.value)
             return Token.create_number(result)
 
-        elif type_number == X and type_power == Token:
-            if power.value == 0.0:
+        elif type_left == X and type_right == Token:
+            if right.value == 0.0:
                 return Token.create_number(1)
-            number.power *= power.value
-            return number
+            left.power *= right.value
+            return left
 
     # Multiplication ###########################################################
     elif type_token == Multiplication:

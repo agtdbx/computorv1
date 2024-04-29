@@ -110,7 +110,6 @@ def _add_token_divide_by_number_or_x(token, value):
 
 
 def _add_token_multiply_parentheses(left: Parentheses, right: Parentheses):
-    # (a + b) (c + d) = ac + ad + bc + bd
     sub_tokens = []
     for ltok in left.tokens:
         for rtok in right.tokens:

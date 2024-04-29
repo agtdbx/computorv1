@@ -13,8 +13,7 @@
 from type.token import          Token
 from type.x import              X
 from type.parentheses import    Parentheses
-from type.operator import       Power, Multiplication, Division, Addition,\
-                                Substraction
+from type.operator import       Addition
 
 def split_by_add_simplification(tokens: list) -> list:
     new_list = []
@@ -62,15 +61,6 @@ def _is_addition_in_token(token) -> bool:
     if type_token == Parentheses:
         return _is_addition_in_parentheses(token)
 
-    if type_token == Power:
-        if _is_addition_in_token(token.number):
-            return True
-
-        if _is_addition_in_token(token.power):
-            return True
-
-        return False
-
     if _is_addition_in_token(token.left):
         return True
 
@@ -95,11 +85,6 @@ def _split_by_add_token(token):
 
     if type_token == Parentheses:
         token.tokens = split_by_add_simplification(token.tokens)
-        return
-
-    if type_token == Power:
-        _split_by_add_token(token.number)
-        _split_by_add_token(token.power)
         return
 
     _split_by_add_token(token.left)
