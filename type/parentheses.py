@@ -49,3 +49,11 @@ class Parentheses:
             string += self.tokens[i].to_string(depth)
 
         return string
+
+    # Public methods ###########################################################
+
+    def copy(self):
+        subtokens = []
+        for token in self.tokens:
+            subtokens.append(token.copy())
+        return Parentheses(subtokens)

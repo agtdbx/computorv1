@@ -83,13 +83,20 @@ class Token:
     def is_equal(self) -> bool:
         return self.type == TOKEN_EQUAL
 
-    # Static methods ###########################################################
+    # Public methods ###########################################################
     # Creation -----------------------------------------------------------------
 
     def create_number(number: float):
         token = Token()
         token.type = TOKEN_NUMBER
         token.value = number
+        return token
+
+
+    def copy(self):
+        token = Token()
+        token.type = self.type
+        token.value = self.value
         return token
 
     # Parsing ------------------------------------------------------------------

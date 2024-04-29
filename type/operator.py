@@ -6,12 +6,10 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 12:27:14 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/29 23:23:09 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from utils.print_utils import   print_error
-from type.token import          Token
 from type.parentheses import    Parentheses
 
 ################################################################################
@@ -63,6 +61,11 @@ class Power:
 
         return []
 
+    # Public methods ###########################################################
+
+    def copy(self):
+        return Power(self.left.copy(), self.right.copy())
+
 
 ################################################################################
 # Multiplication ###############################################################
@@ -112,6 +115,11 @@ class Multiplication:
             return [self.right]
 
         return []
+
+    # Public methods ###########################################################
+
+    def copy(self):
+        return Multiplication(self.left.copy(), self.right.copy())
 
 
 ################################################################################
@@ -164,6 +172,11 @@ class Division:
 
         return []
 
+    # Public methods ###########################################################
+
+    def copy(self):
+        return Division(self.left.copy(), self.right.copy())
+
 
 ################################################################################
 # Addition #####################################################################
@@ -214,6 +227,11 @@ class Addition:
 
         return []
 
+    # Public methods ###########################################################
+
+    def copy(self):
+        return Addition(self.left.copy(), self.right.copy())
+
 ################################################################################
 # Substraction #################################################################
 class Substraction:
@@ -262,3 +280,8 @@ class Substraction:
             return [self.right]
 
         return []
+
+    # Public methods ###########################################################
+
+    def copy(self):
+        return Substraction(self.left.copy(), self.right.copy())

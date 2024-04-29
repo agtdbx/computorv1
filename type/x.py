@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:04 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 13:55:16 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/29 23:20:56 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,3 +40,11 @@ class X:
         string = ' ' * depth + f"x[{self.multiplication},{self.power}]"
 
         return string
+
+    # Public methods ###########################################################
+
+    def copy(self):
+        x = X()
+        x.multiplication = self.multiplication
+        x.power = self.power
+        return x
