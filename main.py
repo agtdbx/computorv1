@@ -50,22 +50,22 @@ if __file__ != "__main__":
     left_tokens, right_tokens = split_by_equal(tokens)
 
     operator_check(left_tokens, right_tokens)
-
-    print("\n#################[BEFORE SIMPLIFICATION]#################")
-    print_token(left_tokens, "LEFT")
-    #print_token(right_tokens, "RIGHT")
-    print_equation(left_tokens, "LEFT")
-    #print_equation(left_tokens, "RIGHT")
-
     inverse_negative_simplification(left_tokens, right_tokens)
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
     parentheses_simplification(left_tokens, right_tokens)
     simple_simplification(left_tokens, right_tokens)
 
-    print("\n#################[AFTER SIMPLIFICATION]#################")
+    print("\n#################[BEFORE MOVE EQUAL]#################")
     print_token(left_tokens, "LEFT")
-    #print_token(right_tokens, "RIGHT")
+    print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
-    #print_equation(left_tokens, "RIGHT")
+    print_equation(left_tokens, "RIGHT")
+
+
+    print("\n#################[AFTER MOVE EQUAL]#################")
+    print_token(left_tokens, "LEFT")
+    print_token(right_tokens, "RIGHT")
+    print_equation(left_tokens, "LEFT")
+    print_equation(left_tokens, "RIGHT")
 

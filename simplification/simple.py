@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 12:41:33 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/29 23:36:09 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,16 +26,16 @@ def _simple_simplification(tokens: list):
     for i in range(len(tokens)):
         tokens[i] = _simple_simplify(tokens[i])
 
-    lenght = 0
-    while lenght != len(tokens) and len(tokens) > 1:
-        lenght = len(tokens)
-        left = tokens[0]
-        right = tokens[1]
-        tokens[0] = _simple_simplify(Addition(left, right))
-        if type(tokens[0]) == Addition:
-            tokens[0] = left
+    i = 1
+    while i < len(tokens):
+        left = tokens[i - 1]
+        right = tokens[i]
+        tokens[i - 1] =  _simple_simplify(Addition(left, right))
+        if type(tokens[i - 1]) == Addition:
+            tokens[i - 1] = left
+            i += 1
         else:
-            tokens.pop(1)
+            tokens.pop(i)
 
 
 def _simple_simplify(token):
