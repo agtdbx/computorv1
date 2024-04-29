@@ -61,7 +61,7 @@ if __file__ != "__main__":
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
     parentheses_simplification(left_tokens, right_tokens)
-    simple_simplification(left_tokens, right_tokens)
+    #simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[AFTER SIMPLIFICATION]#################")
     print_token(left_tokens, "LEFT")

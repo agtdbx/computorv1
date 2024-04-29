@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 12:46:55 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/29 23:02:22 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,17 @@ def _parentheses_simplify(token):
                 sub_tokens.append(_add_token_divide_by_number_or_x(tok, right))
             return Parentheses(sub_tokens)
 
+    elif type_token == Power:
+        token.left = _parentheses_simplify(token.left)
+        token.right = _parentheses_simplify(token.right)
+        left = token.left
+        right = token.right
+        type_left = type(token.left)
+        type_right = type(token.right)
+
+        if type_left == Parentheses and type_right == Token:
+            return _add_token_parentheses_power_by_number(left, right)
+
     return token
 
 
@@ -113,6 +124,34 @@ def _add_token_multiply_parentheses(left: Parentheses, right: Parentheses):
     sub_tokens = []
     for ltok in left.tokens:
         for rtok in right.tokens:
+            print(f"TKT {ltok} * {rtok} ")
             sub_tokens.append(Multiplication(ltok, rtok))
 
-    return Parentheses(sub_tokens)
+    print("CHECK")
+    for tok in sub_tokens:
+        print("   ", tok)
+
+    ret = Parentheses(sub_tokens)
+    print("CHECK 2")
+    print(ret)
+
+    return ret
+
+
+def _add_token_parentheses_power_by_number(token: Parentheses, value: Token):
+    divide = False
+    if value.value < 0:
+        value.value = -value.value
+        divide = True
+
+    copy_subtokens = token.tokens.copy()
+    result = token
+    for _ in range(1, int(value.value)):
+        result = Multiplication(result, Parentheses(copy_subtokens.copy()))
+
+    result = _parentheses_simplify(result)
+
+    if divide:
+        result = Division(Token.create_number(1), result)
+
+    return result
