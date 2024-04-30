@@ -46,7 +46,6 @@ if __file__ != "__main__":
     print(f"Input : {sys.argv[1]}")
 
     tokens = get_tokens_from_input(sys.argv[1])
-
     left_tokens, right_tokens = split_by_equal(tokens)
 
     operator_check(left_tokens, right_tokens)

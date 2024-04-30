@@ -32,8 +32,7 @@ def _inverse_negative(token):
         return token
 
     if type_token == Parentheses:
-        _inverse_negative_in_list(token.tokens)
-        return token
+        return _inverse(token)
 
     if type_token == Substraction:
         token.right = _inverse(token.right)
@@ -55,7 +54,12 @@ def _inverse(token):
         token.multiplication *= -1
 
     elif type_token == Parentheses:
-        token.tokens[0] = _inverse(token.tokens[0])
+        for i in range(len(token.tokens)):
+            token.tokens[i] = _inverse(token.tokens[i])
+
+    elif type_token == Addition:
+        token.left = _inverse(token.left)
+        token.right = _inverse(token.right)
 
     else:
         token.left = _inverse(token.left)

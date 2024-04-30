@@ -32,7 +32,8 @@ def get_tokens_from_input(string: str) -> list:
         token = None
 
         if is_begin_number(string[start])\
-                or (before == "operator" and start + 1 < length\
+                or ((before == "operator" or before == "parentheses-open")\
+                    and start + 1 < length\
                     and string[start] == '-'\
                     and is_begin_number(string[start + 1])):
             if before == "parentheses-close":
