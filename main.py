@@ -52,21 +52,24 @@ if __file__ != "__main__":
     inverse_negative_simplification(left_tokens, right_tokens)
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
+
+    print_token(left_tokens, "LEFT")
+
     parentheses_simplification(left_tokens, right_tokens)
-    simple_simplification(left_tokens, right_tokens)
+    #simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[BEFORE MOVE EQUAL]#################")
-    # print_token(left_tokens, "LEFT")
+    print_token(left_tokens, "LEFT")
     # print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
-    print_equation(right_tokens, "RIGHT")
+    #print_equation(right_tokens, "RIGHT")
 
     join_left_right(left_tokens, right_tokens)
     simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[AFTER MOVE EQUAL]#################")
-    # print_token(left_tokens, "LEFT")
+    print_token(left_tokens, "LEFT")
     # print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
-    print_equation(right_tokens, "RIGHT")
+    #print_equation(right_tokens, "RIGHT")
 

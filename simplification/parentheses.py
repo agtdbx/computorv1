@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/29 23:25:30 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 19:45:54 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,15 +109,7 @@ def _add_token_divide_by_number_or_x(token, value):
         token.right = _add_token_divide_by_number_or_x(token.right, value)
         return token
 
-    if type_token == Division or type_token == Division:
-        token.left = Division(token.left, value)
-        token.right = Division(token.right, value)
-        return token
-
-    if type_token == X or type_token == Token:
-        return Division(token, value)
-
-    return token
+    return Division(token, value)
 
 
 def _add_token_multiply_parentheses(left: Parentheses, right: Parentheses):

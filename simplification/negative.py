@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 23:09:20 by auguste           #+#    #+#              #
-#    Updated: 2024/04/28 12:19:35 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 19:31:12 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ def _inverse_negative(token):
         return token
 
     if type_token == Parentheses:
-        return _inverse(token)
+        _inverse_negative_in_list(token.tokens)
+        return token
 
     if type_token == Substraction:
         token.right = _inverse(token.right)
