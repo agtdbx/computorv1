@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/30 20:04:55 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 21:02:07 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,13 @@ def _simple_simplify(token):
     type_token = type(token)
 
     if type_token == Token or type_token == X:
+        return token
+
+    if type_token == X:
+        if token.power == 0:
+            return Token.create_number(1)
+        if token.multiplication == 0:
+            return Token.create_number(0)
         return token
 
     # Power ####################################################################
@@ -130,6 +137,11 @@ def _simple_simplify(token):
             left.power -= right.power
             left.multiplication *= right.multiplication
             return left
+
+        elif type_left == Parentheses and type_right == Parentheses:
+            if left == right:
+                return Token.create_number(1)
+            return token
 
     # Addition #################################################################
     elif type_token == Addition:

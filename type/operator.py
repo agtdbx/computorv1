@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/04/29 23:23:09 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 20:14:56 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ class Power:
 
     def __str__(self) -> str:
         return str(self.left) + '^' + str(self.right)
+
+    def __eq__(self, value) -> bool:
+        return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################
 
@@ -76,6 +79,9 @@ class Multiplication:
 
     def __str__(self) -> str:
         return str(self.left) + " * " + str(self.right)
+
+    def __eq__(self, value) -> bool:
+        return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################
 
@@ -133,6 +139,9 @@ class Division:
     def __str__(self) -> str:
         return str(self.left) + " / " + str(self.right)
 
+    def __eq__(self, value) -> bool:
+        return self.left == value.left and self.right == value.right
+
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:
@@ -188,6 +197,9 @@ class Addition:
     def __str__(self) -> str:
         return str(self.left) + " + " + str(self.right)
 
+    def __eq__(self, value) -> bool:
+        return self.left == value.left and self.right == value.right
+
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:
@@ -241,6 +253,9 @@ class Substraction:
 
     def __str__(self) -> str:
         return str(self.left) + " - " + str(self.right)
+
+    def __eq__(self, value) -> bool:
+        return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################
 

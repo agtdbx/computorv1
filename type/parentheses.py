@@ -29,6 +29,17 @@ class Parentheses:
 
         return string
 
+    def __eq__(self, value) -> bool:
+        length = len(self.tokens)
+        if len(value.tokens) != length:
+            return False
+
+        for i in range(length):
+            if not self.tokens[i] == value.tokens[i]:
+                return False
+
+        return True
+
     def contains_variable(self) -> bool:
         for token in self.tokens:
             if type(token) == Token and token.is_variable():

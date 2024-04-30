@@ -67,7 +67,7 @@ if __file__ != "__main__":
     remove_division(left_tokens)
 
     #print("\n#################[AFTER REMOVE DIVISION]#################")
-    print_token(left_tokens, "LEFT")
+    #print_token(left_tokens, "LEFT")
     print_equation(left_tokens, "LEFT")
     #print_token(right_tokens, "RIGHT")
     #print_equation(right_tokens, "RIGHT")
