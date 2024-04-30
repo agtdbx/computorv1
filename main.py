@@ -12,14 +12,14 @@
 
 import sys
 
-from parsing.parsing import             get_tokens_from_input
-from parsing.split_equal import         split_by_equal
-from parsing.operator import            operator_check
-from simplification.negative import     inverse_negative_simplification
-from simplification.split_by_add import split_by_add_simplification
-from simplification.parentheses import  parentheses_simplification
-from simplification.simple import       simple_simplification
-
+from parsing.parsing import                 get_tokens_from_input
+from parsing.split_equal import             split_by_equal
+from parsing.operator import                operator_check
+from simplification.negative import         inverse_negative_simplification
+from simplification.split_by_add import     split_by_add_simplification
+from simplification.parentheses import      parentheses_simplification
+from simplification.simple import           simple_simplification
+from simplification.join_left_right import  join_left_right
 
 def print_token(tokens: list, side):
     print(f"\n===={side} TOKENS====")
@@ -56,15 +56,17 @@ if __file__ != "__main__":
     simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[BEFORE MOVE EQUAL]#################")
-    print_token(left_tokens, "LEFT")
-    print_token(right_tokens, "RIGHT")
+    # print_token(left_tokens, "LEFT")
+    # print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
-    print_equation(left_tokens, "RIGHT")
+    print_equation(right_tokens, "RIGHT")
 
+    join_left_right(left_tokens, right_tokens)
+    simple_simplification(left_tokens, right_tokens)
 
     print("\n#################[AFTER MOVE EQUAL]#################")
-    print_token(left_tokens, "LEFT")
-    print_token(right_tokens, "RIGHT")
+    # print_token(left_tokens, "LEFT")
+    # print_token(right_tokens, "RIGHT")
     print_equation(left_tokens, "LEFT")
-    print_equation(left_tokens, "RIGHT")
+    print_equation(right_tokens, "RIGHT")
 
