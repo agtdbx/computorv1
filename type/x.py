@@ -6,12 +6,10 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:04 by auguste           #+#    #+#              #
-#    Updated: 2024/04/29 23:20:56 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 23:33:18 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from utils.print_utils import   print_error
-from type.token import          Token
 
 class X:
     def __init__(self) -> None:
