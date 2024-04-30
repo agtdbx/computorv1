@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/30 19:46:26 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/30 20:04:55 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,15 @@ def _simple_simplify(token):
             left.power += right.power
             left.multiplication *= right.multiplication
             return left
+
+        elif type_left == Division and type_right != Division:
+            left.left = Multiplication(left.left, right)
+            return left
+
+        elif type_left != Division and type_right == Division:
+            right.left = Multiplication(right.left, left)
+            _simple_simplify(right)
+            return right
 
     # Division #################################################################
     elif type_token == Division:

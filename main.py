@@ -20,6 +20,7 @@ from simplification.split_by_add import     split_by_add_simplification
 from simplification.parentheses import      parentheses_simplification
 from simplification.simple import           simple_simplification
 from simplification.join_left_right import  join_left_right
+from simplification.remove_division import  remove_division
 
 def print_token(tokens: list, side):
     print(f"\n===={side} TOKENS====")
@@ -52,24 +53,22 @@ if __file__ != "__main__":
     inverse_negative_simplification(left_tokens, right_tokens)
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
-
-    print_token(left_tokens, "LEFT")
-
     parentheses_simplification(left_tokens, right_tokens)
-    #simple_simplification(left_tokens, right_tokens)
-
-    print("\n#################[BEFORE MOVE EQUAL]#################")
-    print_token(left_tokens, "LEFT")
-    # print_token(right_tokens, "RIGHT")
-    print_equation(left_tokens, "LEFT")
-    #print_equation(right_tokens, "RIGHT")
-
+    simple_simplification(left_tokens, right_tokens)
     join_left_right(left_tokens, right_tokens)
     simple_simplification(left_tokens, right_tokens)
 
-    print("\n#################[AFTER MOVE EQUAL]#################")
-    print_token(left_tokens, "LEFT")
-    # print_token(right_tokens, "RIGHT")
+    #print("\n#################[BEFORE REMOVE DIVISION]#################")
+    #print_token(left_tokens, "LEFT")
     print_equation(left_tokens, "LEFT")
+    #print_token(right_tokens, "RIGHT")
+    #print_equation(right_tokens, "RIGHT")
+
+    remove_division(left_tokens)
+
+    #print("\n#################[AFTER REMOVE DIVISION]#################")
+    print_token(left_tokens, "LEFT")
+    print_equation(left_tokens, "LEFT")
+    #print_token(right_tokens, "RIGHT")
     #print_equation(right_tokens, "RIGHT")
 

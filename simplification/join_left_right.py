@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    join_left_right.py                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/30 19:49:19 by auguste           #+#    #+#              #
+#    Updated: 2024/04/30 19:49:19 by auguste          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 from type.token import              Token
 from type.parentheses import        Parentheses
 from simplification.negative import _inverse
