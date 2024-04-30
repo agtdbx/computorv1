@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 23:35:07 by auguste           #+#    #+#              #
-#    Updated: 2024/04/30 23:37:12 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 00:32:46 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,6 @@ def print_test_equation(tokens: list, side):
 
 
 def print_equation(left_tokens, right_tokens):
-    print("Simplify : ", end='')
-
     _print_equation_part(left_tokens)
     print(" = ", end='')
     _print_equation_part(right_tokens)

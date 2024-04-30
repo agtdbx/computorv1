@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 15:56:36 by auguste           #+#    #+#              #
-#    Updated: 2024/04/30 19:45:54 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 00:19:28 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,17 @@ from type.operator import       Power, Multiplication, Division, Addition,\
 def parentheses_simplification(left_tokens: list, right_tokens: list):
     _parentheses_simplification(left_tokens)
     _parentheses_simplification(right_tokens)
+
+
+def remove_parentheses(left_tokens: list):
+    i = 0
+    while i < len(left_tokens):
+        token = left_tokens[i]
+        if type(token) == Parentheses:
+            left_tokens.extend(token.tokens)
+            left_tokens.pop(i)
+        else:
+            i += 1
 
 
 def _parentheses_simplification(tokens: list):
