@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 01:36:05 by auguste           #+#    #+#              #
-#    Updated: 2024/05/01 02:12:29 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 02:36:23 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,17 @@ def resolve_degree_2(save_operator_left: list,
     print(f"discriminant {discriminant}")
 
     if discriminant < 0:
-        # TODO: make complexe number
-        print_error("no solution for the equation")
+        sqrt_discriminant = sqrt(-discriminant)
+        divide_part = a * 2
+
+        sub_result = -b / divide_part
+        result_1 = sub_result - sqrt_discriminant
+        result_2 = sub_result + sqrt_discriminant
+
+        i_mult = 1 / divide_part
+
+        print(f"Result 1 : {result_1} * {i_mult}i")
+        print(f"Result 2 : {result_2} * {i_mult}i")
 
     elif discriminant == 0:
         result = (-b) / (a * 2)
@@ -60,8 +69,11 @@ def resolve_degree_2(save_operator_left: list,
 
     else:
         sqrt_discriminant = sqrt(discriminant)
-        result_1 = (-b - sqrt_discriminant) / (a * 2)
-        result_2 = (-b + sqrt_discriminant) / (a * 2)
+        divide_part = a * 2
+
+        result_1 = (-b - sqrt_discriminant) / divide_part
+        result_2 = (-b + sqrt_discriminant) / divide_part
+
         if not check_result(save_operator_left,
                             save_operator_right,
                             result_1):
