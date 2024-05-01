@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:04 by auguste           #+#    #+#              #
-#    Updated: 2024/05/01 00:11:00 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 01:49:27 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ class X:
         return string
 
     def __eq__(self, value) -> bool:
+        if value == None:
+            return False
         return self.multiplication == value.multiplication\
                 and self.power == value.power
 

@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/04/30 21:02:07 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 02:10:17 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ from utils.math_utils import    pow
 from type.token import          Token
 from type.x import              X
 from type.parentheses import    Parentheses
-from type.operator import       Power, Multiplication, Division, Addition
+from type.operator import       Power, Multiplication, Division, Addition,\
+                                Substraction
 
 def simple_simplification(left_tokens: list, right_tokens: list):
     _simple_simplification(left_tokens)
@@ -160,6 +161,29 @@ def _simple_simplify(token):
             if left.power != right.power:
                 return token
             left.multiplication += right.multiplication
+            if left.multiplication == 0:
+                return Token.create_number(0)
+            return left
+
+    # Substraction #############################################################
+    elif type_token == Substraction:
+        token.left = _simple_simplify(token.left)
+        token.right = _simple_simplify(token.right)
+        left = token.left
+        right = token.right
+        type_left = type(token.left)
+        type_right = type(token.right)
+
+        if type_left == Token and type_right == Token:
+            result = left.value - right.value
+            return Token.create_number(result)
+
+        elif type_left == X and type_right == X:
+            if left.power != right.power:
+                return token
+            left.multiplication -= right.multiplication
+            if left.multiplication == 0:
+                return Token.create_number(0)
             return left
 
     # Parentheses ##############################################################

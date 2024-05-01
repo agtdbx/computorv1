@@ -6,11 +6,12 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 00:58:14 by auguste           #+#    #+#              #
-#    Updated: 2024/05/01 01:32:45 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/01 02:10:10 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from utils.math_utils import        pow
+from utils.print_equation import    print_test_token
 from type.token import              Token
 from type.x import                  X
 from type.parentheses import        Parentheses
@@ -20,7 +21,8 @@ def check_result(save_operator_left, save_operator_right, result: float) -> bool
     try:
         result_left = _check_result(save_operator_left, result)
         result_right = _check_result(save_operator_right, result)
-        return result_left == result_right
+        print(result_left, result_right)
+        return abs(result_left - result_right) < 0.001
     except:
         return False
 
@@ -43,7 +45,7 @@ def _replace_x(token, result: float):
     if type(token) == Parentheses:
         sub_tokens = []
         for i in range(len(token.tokens)):
-            sub_tokens.append(_replace_x(token.tokens[i]))
+            sub_tokens.append(_replace_x(token.tokens[i], result))
         return Parentheses(sub_tokens)
     new_token = token.copy()
     new_token.left = _replace_x(token.left, result)

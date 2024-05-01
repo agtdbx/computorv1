@@ -28,6 +28,7 @@ from simplification.right_order import      right_order
 from resolution.get_degree import           get_degree
 from resolution.result import               check_result
 from resolution.degree_1 import             resolve_degree_1
+from resolution.degree_2 import             resolve_degree_2
 
 
 if __file__ != "__main__":
@@ -88,6 +89,9 @@ if __file__ != "__main__":
                          left_tokens,
                          right_tokens)
     elif degree == 2:
-        pass
+        resolve_degree_2(save_operator_left,
+                         save_operator_right,
+                         left_tokens,
+                         right_tokens)
     else:
         print_error(f"cannot resolve equation with {degree} degree")
