@@ -121,7 +121,7 @@ def get_end_number(string: str, length: int, i: int) -> int:
 def get_end_variable(string: str, length: int, i: int) -> int:
     while i < length:
         if is_white_space(string[i]) or is_operator(string[i])\
-            or is_parentheses(string[i]):
+            or is_parentheses(string[i]) or string[i] == '=':
             break
         i += 1
     return i

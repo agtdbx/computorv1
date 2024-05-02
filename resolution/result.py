@@ -21,7 +21,6 @@ def check_result(save_operator_left, save_operator_right, result: float) -> bool
     try:
         result_left = _check_result(save_operator_left, result)
         result_right = _check_result(save_operator_right, result)
-        print(result_left, result_right)
         return abs(result_left - result_right) < 0.001
     except:
         return False

@@ -22,9 +22,11 @@ def remove_division(left_tokens: list):
     while i < len(left_tokens):
         token = left_tokens[i]
         if type(token) == Division:
+            left_tokens[i] = left_tokens[i].left
             for j in range(len(left_tokens)):
-                left_tokens[j] = Multiplication(left_tokens[j],
-                                                token.right.copy())
+                if i != j:
+                    left_tokens[j] = Multiplication(left_tokens[j],
+                                                    token.right.copy())
 
             _simple_simplification(left_tokens)
             _parentheses_simplification(left_tokens)
@@ -37,8 +39,6 @@ def remove_division(left_tokens: list):
                     left_tokens.pop(j)
                 else:
                     j += 1
-
-            # TODO: ADD ALL TOGETHER, NO MATTER THE PLACE
         i += 1
 
     i = 0
@@ -59,3 +59,5 @@ def remove_division(left_tokens: list):
             else:
                 j += 1
         i += 1
+
+# py main.py '(X^2 + 5X - 3)/(-1X^2 - 3X + 8)'

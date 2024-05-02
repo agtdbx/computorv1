@@ -44,35 +44,63 @@ if __file__ != "__main__":
     # Split the equation into two part arround the equal
     left_tokens, right_tokens = split_by_equal(tokens)
 
-    # Simplify the equation
+    # Transform token into operator with priority
     operator_check(left_tokens, right_tokens)
+
+    # Save tokens list
     save_operator_left = []
     for tok in left_tokens:
         save_operator_left.append(tok.copy())
     save_operator_right = []
     for tok in right_tokens:
         save_operator_right.append(tok.copy())
+
+    # Replace minus by add invert. a - b = a + (b * -1)
     inverse_negative_simplification(left_tokens, right_tokens)
+
+    # Instead of keep add as operator, just have multiple element in list
     left_tokens = split_by_add_simplification(left_tokens)
     right_tokens = split_by_add_simplification(right_tokens)
+
+    # Make the parenthese calculation :
+    # - scale : (a + b) * c = (a * c + b * c)
+    # - multiplication : (a + b) * (c + d) = (a*c + a*d + b*c + b*d)
+    # - power : (a + b)^2 = (a*a + a*b + b*a + b*b)
     parentheses_simplification(left_tokens, right_tokens)
+
+    # Simplify all calulation. Calculate all numbers. (1 + 3) * x -> 4 * x
     simple_simplification(left_tokens, right_tokens)
+
+    # Move the right part of the equation (equal is the middle) to the lef.
+    # a = b -> a - b = 0
     join_left_right(left_tokens, right_tokens)
+
+    # Another simplification
     simple_simplification(left_tokens, right_tokens)
+
+    # Remove the division by X : 4 / x + 3 = 0 -> 4 + 3x = 0
     remove_division(left_tokens)
+
+    # Remove parentheses : (1 + X * 2) + -3 = 0 -> 1 + X * 2 + -3 = 0
     remove_parentheses(left_tokens)
+
+    # Another simplification
     simple_simplification(left_tokens, right_tokens)
+
+    # Make the higher power from left to right
     right_order(left_tokens)
 
     # Get degree of the equation
     degree = get_degree(left_tokens)
 
+    # If this is degree 0, do not print the equation. It will be like 1 = 0
     if degree == 0:
-        print("Equation degree : 0")
         if not check_result(save_operator_left,
                             save_operator_right,
-                            left_tokens[0]):
+                            left_tokens[0].value):
             print_error("the equation have no result")
+
+        print("Equation degree : 0")
         print(f"Result : {left_tokens[0]}")
         exit()
 
@@ -81,9 +109,7 @@ if __file__ != "__main__":
     print_equation(left_tokens, right_tokens)
 
     # Resolve the equation
-    if degree == -1:
-        print_error("the equation have no solution")
-    elif degree == 1:
+    if degree == 1:
         resolve_degree_1(save_operator_left,
                          save_operator_right,
                          left_tokens,

@@ -44,9 +44,9 @@ def _print_equation_part(tokens):
                 print(f" - {-token.value}", end='')
                 continue
             elif type(token) == X and token.multiplication < 0:
-                token.multiplication * -1
+                token.multiplication *= -1
                 print(f" - {token}", end='')
-                token.multiplication * -1
+                token.multiplication *= -1
                 continue
             print(" + ", end='')
         print(token, end='')
