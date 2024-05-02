@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from type.x     import  X
+from type.x import  X
 
 def right_order(left_tokens: list):
     left_tokens.sort(key=_sort_function, reverse=True)

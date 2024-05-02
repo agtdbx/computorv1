@@ -26,6 +26,7 @@ from simplification.join_left_right import  join_left_right
 from simplification.remove_division import  remove_division
 from simplification.right_order import      right_order
 from resolution.get_degree import           get_degree
+from resolution.is_there_an_x import        is_there_an_x
 from resolution.result import               check_result
 from resolution.degree_1 import             resolve_degree_1
 from resolution.degree_2 import             resolve_degree_2
@@ -90,7 +91,7 @@ if __file__ != "__main__":
     # Make the higher power from left to right
     right_order(left_tokens)
 
-    # Get degree of the equation
+    # Get degree of the equation and make error for ^X
     degree = get_degree(left_tokens)
 
     # If this is degree 0, do not print the equation. It will be like 1 = 0
@@ -100,8 +101,10 @@ if __file__ != "__main__":
                             left_tokens[0].value):
             print_error("the equation have no result")
 
-        print("Equation degree : 0")
-        print(f"Result : {left_tokens[0]}")
+        if is_there_an_x(save_operator_left, save_operator_right):
+            print("X can have any Real value, like 42 !")
+        else:
+            print(f"Equation degree : 0\nResult : {left_tokens[0]}")
         exit()
 
     # Print the simplified equation
