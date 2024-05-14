@@ -30,12 +30,26 @@ class Parentheses:
         return string
 
     def __eq__(self, value) -> bool:
+        if type(value) != Parentheses:
+            return False
+
         length = len(self.tokens)
         if len(value.tokens) != length:
             return False
 
-        for i in range(length):
-            if not self.tokens[i] == value.tokens[i]:
+        copy_tokens = []
+        for val in value.tokens:
+            copy_tokens.append(val.copy())
+
+        for val in self.tokens:
+            i = 0
+            while i < length:
+                if val == copy_tokens[i]:
+                    copy_tokens.pop(i)
+                    break
+                i += 1
+
+            if i == length:
                 return False
 
         return True

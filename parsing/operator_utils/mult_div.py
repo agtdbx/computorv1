@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:30:18 by auguste           #+#    #+#              #
-#    Updated: 2024/04/27 12:38:28 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/14 18:49:09 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,5 @@ def parse_mult_div(tokens: list) -> bool:
             tokens[i - 1] = Multiplication(before, after)
         else:
             tokens[i - 1] = Division(before, after)
-
-        i += 1
 
     return modification > 0

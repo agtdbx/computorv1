@@ -13,7 +13,8 @@
 import sys
 
 from utils.print_utils import               print_error
-from utils.print_equation import            print_equation
+from utils.print_equation import            print_equation, print_test_equation,\
+                                            print_test_token
 from parsing.parsing import                 get_tokens_from_input
 from parsing.split_equal import             split_by_equal
 from parsing.operator import                operator_check
@@ -48,6 +49,8 @@ if __file__ != "__main__":
 
     # Transform token into operator with priority
     operator_check(left_tokens, right_tokens)
+    #print_test_equation(left_tokens, "AFTER REMOVE +")
+    #print_test_token(left_tokens, "AFTER REMOVE +")
 
     # Save tokens list
     save_operator_left = []

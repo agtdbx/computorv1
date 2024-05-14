@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 20:16:09 by auguste           #+#    #+#              #
-#    Updated: 2024/05/01 01:49:08 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/14 18:49:28 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ class Power:
         return str(self.left) + '^' + str(self.right)
 
     def __eq__(self, value) -> bool:
-        if value == None:
-            return False
+        if type(value) != None:
+            return Power
+
         return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################
@@ -83,9 +84,11 @@ class Multiplication:
         return str(self.left) + " * " + str(self.right)
 
     def __eq__(self, value) -> bool:
-        if value == None:
+        if type(value) != Multiplication:
             return False
-        return self.left == value.left and self.right == value.right
+
+        return (self.left == value.left and self.right == value.right) or\
+                (self.left == value.right and self.right == value.left)
 
     # String methods ###########################################################
 
@@ -144,8 +147,9 @@ class Division:
         return str(self.left) + " / " + str(self.right)
 
     def __eq__(self, value) -> bool:
-        if value == None:
+        if type(value) != Division:
             return False
+
         return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################
@@ -204,10 +208,11 @@ class Addition:
         return str(self.left) + " + " + str(self.right)
 
     def __eq__(self, value) -> bool:
-        if value == None:
+        if type(value) != Addition:
             return False
-        return self.left == value.left and self.right == value.right
 
+        return (self.left == value.left and self.right == value.right) or\
+                (self.left == value.right and self.right == value.left)
     # String methods ###########################################################
 
     def to_string(self, depth=0) -> str:
@@ -263,8 +268,9 @@ class Substraction:
         return str(self.left) + " - " + str(self.right)
 
     def __eq__(self, value) -> bool:
-        if value == None:
+        if type(value) != Substraction:
             return False
+
         return self.left == value.left and self.right == value.right
 
     # String methods ###########################################################

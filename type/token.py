@@ -43,8 +43,9 @@ class Token:
 
 
     def __eq__(self, value) -> bool:
-        if value == None:
+        if type(value) != Token:
             return False
+
         return self.type == value.type and self.value == value.value
 
     # String methods ###########################################################

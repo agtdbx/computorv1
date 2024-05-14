@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/05/01 02:10:17 by auguste          ###   ########.fr        #
+#    Updated: 2024/05/14 18:49:26 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,11 @@ from type.operator import       Power, Multiplication, Division, Addition,\
                                 Substraction
 
 def simple_simplification(left_tokens: list, right_tokens: list):
-    _simple_simplification(left_tokens)
-    _simple_simplification(right_tokens)
+    try:
+        _simple_simplification(left_tokens)
+        _simple_simplification(right_tokens)
+    except ValueError as error:
+        print_error(str(error))
 
 
 def _simple_simplification(tokens: list):
@@ -63,7 +66,7 @@ def _simple_simplify(token):
 
         if type_left == Token and type_right == Token:
             if int(right.value) != right.value:
-                print_error("power by decimal")
+                raise ValueError("power by decimal")
             result = pow(left.value, right.value)
             return Token.create_number(result)
 
@@ -119,7 +122,7 @@ def _simple_simplify(token):
 
         if type_left == Token and type_right == Token:
             if right.value == 0:
-                print_error("division by 0")
+                raise ValueError("division by 0")
             result = left.value / right.value
             return Token.create_number(result)
 
