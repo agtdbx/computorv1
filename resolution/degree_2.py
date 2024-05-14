@@ -81,12 +81,12 @@ def resolve_degree_2(save_operator_left: list,
                               save_operator_right,
                               result_2):
                 print_error("no solution for the equation")
-            print(f"Result : {result_1}")
+            print(f"Result : {result_1} ({result_2} invalid)")
 
         elif not check_result(save_operator_left,
                               save_operator_right,
                               result_2):
-            print(f"Result : {result_2}")
+            print(f"Result : {result_2} ({result_1} invalid)")
 
         else:
             print(f"Result 1 : {result_1}")

@@ -11,7 +11,6 @@
 # **************************************************************************** #
 
 from utils.math_utils import        pow
-from utils.print_equation import    print_test_token
 from type.token import              Token
 from type.x import                  X
 from type.parentheses import        Parentheses
