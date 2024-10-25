@@ -20,58 +20,99 @@ def get_tokens_from_input(string: str) -> list:
     if length == 0:
         print_error("empty parameter")
 
-    before = "operator"
+    before = "start"
+    isSpaceBetweenBefore = False
 
     start = 0
     while start < length:
+        tmp = start
         start = get_end_white_spaces(string, length, start)
+        if start > tmp:
+            isSpaceBetweenBefore = True
         if start == length:
             break
 
         end = 0
         token = None
 
-        if is_begin_number(string[start])\
-                or ((before == "operator" or before == "parentheses-open")\
-                    and start + 1 < length\
-                    and string[start] == '-'\
-                    and is_begin_number(string[start + 1])):
-            if before == "parentheses-close":
-                tokens.append(Token.parse_operator('*'))
+        if is_begin_number(string[start]):
             end = get_end_number(string, length, start)
             token = Token.parse_number(string[start:end])
+
+            if not isSpaceBetweenBefore:
+                if before == "operator" \
+                        and len(tokens) > 0 and tokens[-1].value == '-':
+                    strNumber = '-' + string[start:end]
+                    token = Token.parse_number(strNumber)
+                    tokens.pop()
+
+                elif before == "parentheses" \
+                        and len(tokens) > 0 and tokens[-1].value == ')':
+                    tokens.append(Token.parse_operator("*"))
+
             before = "number"
+            isSpaceBetweenBefore = False
+            tokens.append(token)
 
         elif is_operator(string[start]):
             end = start + 1
             token = Token.parse_operator(string[start:end])
             before = "operator"
+            isSpaceBetweenBefore = False
+            tokens.append(token)
 
         elif is_parentheses(string[start]):
-            if string[start] == '(' and (before == "variable"\
-                                        or before == "number" \
-                                        or before == "parentheses-close"):
-                tokens.append(Token.parse_operator('*'))
             end = start + 1
             token = Token.parse_parenthese(string[start:end])
-            if string[start] == '(':
-                before = "parentheses-open"
-            else:
-                before = "parentheses-close"
+
+            if not isSpaceBetweenBefore and token.value == '(':
+                if before == "number" or before == "variable":
+                    tokens.append(Token.parse_operator("*"))
+
+
+            before = "parentheses"
+            isSpaceBetweenBefore = False
+            tokens.append(token)
 
         elif string[start] == '=':
             end = start + 1
             token = Token.parse_equal(string[start:end])
             before = "equal"
+            isSpaceBetweenBefore = False
+            tokens.append(token)
 
         else:
-            if before == "number" or before == "parentheses-close":
-                tokens.append(Token.parse_operator('*'))
             end = get_end_variable(string, length, start)
             token = Token.parse_variable(string[start:end])
-            before = "variable"
 
-        tokens.append(token)
+            if not isSpaceBetweenBefore:
+                if before == "operator" \
+                        and len(tokens) > 0 and tokens[-1].value == '-':
+                    tokens.pop()
+                    tokens.append(Token.parse_parenthese("("))
+                    tokens.append(Token.parse_number("-1"))
+                    tokens.append(Token.parse_operator("*"))
+                    tokens.append(token)
+                    tokens.append(Token.parse_parenthese(")"))
+
+                elif before == "parentheses" \
+                        and len(tokens) > 0 and tokens[-1].value == ')':
+                    tokens.append(Token.parse_operator("*"))
+                    tokens.append(token)
+
+                elif before == "number":
+                    tokens.append(Token.parse_operator("*"))
+                    tokens.append(token)
+
+                else:
+                    tokens.append(token)
+
+            else:
+                tokens.append(token)
+
+            before = "variable"
+            isSpaceBetweenBefore = False
+
         start = end
 
     return tokens
