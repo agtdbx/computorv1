@@ -110,9 +110,10 @@ if __file__ != "__main__":
         else:
             if not check:
                 print_error("the equation is false")
-            if is_there_an_equal(tokens):
+            elif is_there_an_equal(tokens):
                 print("The equation is true")
-            print(f"Equation degree : 0\nResult : {left_tokens[0]}")
+            else:
+                print(f"Equation degree : 0\nResult : {left_tokens[0]}")
         exit()
 
     # Print the simplified equation
