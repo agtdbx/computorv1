@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    degree_2.py                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
+#    By: aderouba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 01:36:05 by auguste           #+#    #+#              #
-#    Updated: 2024/05/14 18:49:17 by auguste          ###   ########.fr        #
+#    Updated: 2024/10/28 11:59:12 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,13 +53,11 @@ def resolve_degree_2(save_operator_left: list,
         divide_part = a * 2
 
         sub_result = -b / divide_part
-        result_1 = sub_result - sqrt_discriminant
-        result_2 = sub_result + sqrt_discriminant
 
-        i_mult = 1 / divide_part
+        i_mult = sqrt_discriminant / divide_part
 
-        print(f"Result 1 : {result_1} * {i_mult}i")
-        print(f"Result 2 : {result_2} * {i_mult}i")
+        print(f"Result 1 : {sub_result} + i * {i_mult}")
+        print(f"Result 2 : {sub_result} - i * {i_mult}")
 
     elif discriminant == 0:
         result = (-b) / (a * 2)
