@@ -6,7 +6,7 @@
 #    By: aderouba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 01:36:05 by auguste           #+#    #+#              #
-#    Updated: 2024/10/28 11:59:12 by aderouba         ###   ########.fr        #
+#    Updated: 2024/10/28 13:27:55 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,8 @@ def resolve_degree_2(save_operator_left: list,
 
         i_mult = sqrt_discriminant / divide_part
 
-        print(f"Result 1 : {sub_result} + i * {i_mult}")
-        print(f"Result 2 : {sub_result} - i * {i_mult}")
+        print(f"Result 1 : {sub_result} + {i_mult} * i")
+        print(f"Result 2 : {sub_result} - {i_mult} * i")
 
     elif discriminant == 0:
         result = (-b) / (a * 2)
