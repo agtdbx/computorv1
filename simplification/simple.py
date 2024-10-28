@@ -3,13 +3,14 @@
 #                                                         :::      ::::::::    #
 #    simple.py                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
+#    By: aderouba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 11:43:37 by auguste           #+#    #+#              #
-#    Updated: 2024/05/14 18:49:26 by auguste          ###   ########.fr        #
+#    Updated: 2024/10/28 11:50:02 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+from utils.print_equation import            print_test_equation, print_test_token
 from utils.print_utils import   print_error
 from utils.math_utils import    pow
 from type.token import          Token
@@ -18,29 +19,39 @@ from type.parentheses import    Parentheses
 from type.operator import       Power, Multiplication, Division, Addition,\
                                 Substraction
 
-def simple_simplification(left_tokens: list, right_tokens: list):
+def simple_simplification(left_tokens: list, right_tokens: list, doprint=False):
     try:
-        _simple_simplification(left_tokens)
+        _simple_simplification(left_tokens, doprint)
         _simple_simplification(right_tokens)
     except ValueError as error:
         print_error(str(error))
 
 
-def _simple_simplification(tokens: list):
+def _simple_simplification(tokens: list, doprint=False):
     for i in range(len(tokens)):
         tokens[i] = _simple_simplify(tokens[i])
 
-    i = 1
-    while i < len(tokens):
-        left = tokens[i - 1]
-        right = tokens[i]
-        tokens[i - 1] =  _simple_simplify(Addition(left, right))
-        if type(tokens[i - 1]) == Addition:
-            tokens[i - 1] = left
-            i += 1
-        else:
-            tokens.pop(i)
+    idLeft = 0
+    while idLeft < len(tokens):
+        left = tokens[idLeft]
 
+        idRight = 0
+        while idRight < len(tokens):
+            if idLeft == idRight:
+                idRight += 1
+                continue
+            right = tokens[idRight]
+
+            test = _simple_simplify(Addition(left, right))
+            if type(test) == Addition:
+                idRight += 1
+            else:
+                tokens[idLeft] = test
+                tokens.pop(idRight)
+                idLeft -= 1
+                break
+
+        idLeft += 1
 
 def _simple_simplify(token):
     type_token = type(token)

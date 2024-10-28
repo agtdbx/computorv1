@@ -49,8 +49,6 @@ if __file__ != "__main__":
 
     # Transform token into operator with priority
     operator_check(left_tokens, right_tokens)
-    #print_test_equation(left_tokens, "AFTER REMOVE +")
-    #print_test_token(left_tokens, "AFTER REMOVE +")
 
     # Save tokens list
     save_operator_left = []
@@ -79,7 +77,6 @@ if __file__ != "__main__":
     # Move the right part of the equation (equal is the middle) to the lef.
     # a = b -> a - b = 0
     join_left_right(left_tokens, right_tokens)
-
     # Another simplification
     simple_simplification(left_tokens, right_tokens)
 
@@ -90,7 +87,9 @@ if __file__ != "__main__":
     remove_parentheses(left_tokens)
 
     # Another simplification
-    simple_simplification(left_tokens, right_tokens)
+    simple_simplification(left_tokens, right_tokens, True)
+    # print_test_equation(left_tokens, "AFTER SIMPLIFY")
+    # print_test_token(left_tokens, "AFTER SIMPLIFY")
 
     # Make the higher power from left to right
     right_order(left_tokens)
